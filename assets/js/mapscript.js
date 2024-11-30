@@ -28,7 +28,7 @@ $(document).ready(function () {
 
     // Use OpenStreetMap tiles (can be replaced with offline tiles if required)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors',
+      attribution: '&copy; OpenStreetMap contributors', 
       maxZoom: 19,
     }).addTo(map);
 
