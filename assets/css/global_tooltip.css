@@ -1,0 +1,74 @@
+/* Tooltip container */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            opacity: 1 !important ;
+        }
+        
+        /* Tooltip text */
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 50px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            
+            /* Position the tooltip text */
+            position: absolute;
+            z-index: 1;
+            bottom: 100%;
+            left: 120%;
+            margin-left: -60px;
+            
+            /* Fade in tooltip */
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        /* Show the tooltip text when you mouse over the tooltip container */
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+       .btn-success{
+        padding: 8px 16px;
+        border-radius: 10px;
+        }
+        .btn-danger{
+            padding: 8px 16px;
+            border-radius: 10px;
+        }
+        .btn-primary{
+            padding: 8px 16px;
+            border-radius: 10px;
+        }
+        
+        .btnedit {
+          background-color: DodgerBlue;
+          border: none;
+          color: white;
+          padding: 8px 16px;
+          font-size: 16px;
+          cursor: pointer;
+          border-radius: 10px
+        }
+        .btnview {
+          background-color: #006600;
+          border: none;
+          color: white;
+          padding: 8px 16px;
+          font-size: 16px;
+          cursor: pointer;
+          border-radius: 10px
+        }
+        .btndelete {
+          background-color: #FF0000 ;
+          border: none;
+          color: white;
+          padding: 8px 16px;
+          font-size: 16px;
+          cursor: pointer;
+          border-radius: 10px
+        }
