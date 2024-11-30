@@ -15,7 +15,7 @@ $(document).ready(function () {
     borderRadius: '5px',
     fontWeight: 'bold',
     zIndex: 1000,
-    color: 'red',
+    color: 'red'
   });
   
   let map, marker;
