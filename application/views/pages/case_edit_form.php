@@ -100,9 +100,9 @@ if (isset($this->session->userdata['logged_in'])) {
 
 
 <form id="case_edit_form" style="margin:30px 45px" action="<?php echo site_url('welcome/case_edit'); ?>" method="post">
-	<!-- <div class="bg-success" id="hideDiv"><?php //echo $this->session->flashdata('case_edit_message');    ?></div> 
-	<!-<div class="bg-danger" id="hideDiv"><?php //echo $this->session->flashdata('case_duplicate');    ?></div> -->
-	<!-- <div class="bg-danger" id="hideDiv"><?php //echo $this->session->flashdata('case_error');    ?></div> -->
+	<!-- <div class="bg-success" id="hideDiv"></?php //echo $this->session->flashdata('case_edit_message');    ?></div> 
+	<!-<div class="bg-danger" id="hideDiv"></?php //echo $this->session->flashdata('case_duplicate');    ?></div> -->
+	<!-- <div class="bg-danger" id="hideDiv"></?php //echo $this->session->flashdata('case_error');    ?></div> -->
 	<input type="text" class="form-control" id="userid" name="userid" value="<?php echo $user_id; ?>"
 	readonly>
 	<?php foreach ($edit_case as $row) {
@@ -401,7 +401,7 @@ if (isset($this->session->userdata['logged_in'])) {
 							<td>
 								<?php echo $fatcharrest->name; ?>
 								<!-- <input id="a_name_edit" name="a_name_edit" class="a_input_box"
-									value="<?php //echo $fatcharrest->name; ?>" readonly> -->
+									value="</?php //echo $fatcharrest->name; ?>" readonly> -->
 							</td>
 							<td>
 								<span>
@@ -412,52 +412,52 @@ if (isset($this->session->userdata['logged_in'])) {
 							<td>
 								<?php echo $fatcharrest->father_name; ?>
 								<!-- <input id="a_fathername_edit" name="a_fathername_edit" class="a_input_box"
-									value="<?php //echo $fatcharrest->father_name; ?>" readonly> -->
+									value="</?php //echo $fatcharrest->father_name; ?>" readonly> -->
 							</td>
 							<td>
 								<?php echo $fatcharrest->address; ?>
 								<!-- <input id="a_address_edit" name="a_address_edit" class="a_input_box"
-									value="<?php //echo $fatcharrest->address; ?>" readonly> -->
+									value="</?php //echo $fatcharrest->address; ?>" readonly> -->
 							</td>
 							<td>
 								<?php echo $fatcharrest->mobile_no; ?>
 								<!-- <input id="a_mobile_edit" name="a_mobile_edit" class="a_input_box"
-									value="<?php //echo $fatcharrest->mobile_no; ?>" readonly> -->
+									value="</?php //echo $fatcharrest->mobile_no; ?>" readonly> -->
 							</td>
 							<td>
 								<?php echo $fatcharrest->age; ?>
 								<!-- <input id="a_age_edit" name="a_age_edit" class="a_input_box"
-									value="<?php //echo $fatcharrest->age; ?>" readonly> -->
+									value="</?php //echo $fatcharrest->age; ?>" readonly> -->
 							</td>
 							<td>
 								<?php echo $fatcharrest->gender; ?>
 								<!-- <input id="a_gender_edit" name="a_gender_edit" class="a_input_box"
-									value="<?php //echo $fatcharrest->gender; ?>" readonly> -->
+									value="</?php //echo $fatcharrest->gender; ?>" readonly> -->
 							</td>
 							<td>
 								<?php echo $fatcharrest->other_case_link; ?>
 								<!-- <input id="a_caselink_edit" name="a_caselink_edit" class="a_input_box"
-									value="<?php //echo $fatcharrest->other_case_link; ?>" readonly> -->
+									value="</?php //echo $fatcharrest->other_case_link; ?>" readonly> -->
 							</td>
 							<td>
 								<?php echo $fatcharrest->modus_operandi; ?>
 								<!-- <input id="a_modus_edit" name="a_modus_edit" class="a_input_box"
-									value="<?php //echo $fatcharrest->modus_operandi; ?>" readonly> -->
+									value="</?php //echo $fatcharrest->modus_operandi; ?>" readonly> -->
 							</td>
 							<td>
 								<?php echo $arrest_person_date;?>
 								<!-- <input id="a_arrestdate_edit" name="a_arrestdate_edit" class="a_input_box"
-									value="<?php //echo $fatcharrest->arrest_date; ?>" readonly> -->
+									value="</?php //echo $fatcharrest->arrest_date; ?>" readonly> -->
 							</td>
 							<td>
 								<?php echo $fatcharrest->status; ?>
 								<!-- <input id="a_status_edit" name="a_status_edit" class="a_input_box"
-									value="<?php //echo $fatcharrest->status; ?>" readonly> -->
+									value="</?php //echo $fatcharrest->status; ?>" readonly> -->
 							</td>
 							<td>
 								<?php echo $fatcharrest->identification_mark; ?>
 								<!-- <input id="a_id_edit" name="a_id_edit" class="a_input_box"
-									value="<?php //echo $fatcharrest->identification_mark; ?>" readonly> -->
+									value="</?php //echo $fatcharrest->identification_mark; ?>" readonly> -->
 							</td>
 
 

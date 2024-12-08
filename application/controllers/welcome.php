@@ -784,7 +784,7 @@ class welcome extends CI_Controller
 		$this->form_validation->set_rules('arrest_entry_ps', 'Police Station', 'trim|required');
 		$this->form_validation->set_rules('arrest_entry_fir_no', 'FIR No', 'trim|required');
 		$this->form_validation->set_rules('arrest_entry_fir_date', 'FIR Date', 'trim|required');
-		$this->form_validation->set_rules('arrest_image', 'Arrest Image', 'callback_validate_image');
+		//$this->form_validation->set_rules('arrest_image', 'Arrest Image', 'callback_validate_image');
 
 
 		if ($this->form_validation->run() == false) {
