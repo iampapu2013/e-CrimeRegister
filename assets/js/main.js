@@ -49,7 +49,7 @@ $(document).ready(function () {
 
     });
 
-   
+
 
     //Victim Edit Module----------->
     $("#v_edit_table tbody").on('click', '.victim_e', function (e) {
@@ -187,7 +187,7 @@ $(document).ready(function () {
         var row = $(this).closest(".rowdata");
         var aId = row.find("input[name='arrest_id']").val();
         var case_id = $('#case_id').val();
-       // alert(aId);
+        // alert(aId);
         // alert(case_id);
         $.ajax({
             mimeType: 'text/html; charset=utf-8',
@@ -247,7 +247,7 @@ $(document).ready(function () {
                                 <span class="tooltiptext">Edit</span>
                             </div>
                             <div class="tooltip">
-                                <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" class="btn btn-danger arrest_delete"><i class="fa fa-trash"></i></button>
                                 <span class="tooltiptext">Delete</span>
                             </div>
 						</td>
@@ -555,7 +555,7 @@ $(document).ready(function () {
     });
 
 
-///--------------------------------UD Modul---------------------------------Edit due------------------------------------>
+    ///--------------------------------UD Modul---------------------------------Edit due------------------------------------>
     // Seizure View Module-------------->
     $('#allud_data tbody').on('click', '.view_uddetails', function (e) {
         //$('.view_allcase').click(function(e){ 
@@ -967,7 +967,7 @@ $(document).ready(function () {
         if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57) && e.which != 46) {
             return false;
         }
-    }); 
+    });
     $('#seizure_edit_arms,#seizure_edit_ammu,#seizure_edit_exp,#seizure_edit_ids,#seizure_edit_idd,#seizure_edit_bomb,#seizure_edit_ganja,#seizure_edit_herion,#seizure_edit_fc,#seizure_edit_bm').keypress(function (e) {
         if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57) && e.which != 46) {
             return false;
@@ -1227,13 +1227,13 @@ $('#arrest_update').click(function (e) {
         dataType: "json",
         success: function (data) {
             report = JSON.parse(JSON.stringify(data));
-            reloadTableDataArrest(a_edit_id);
+            reloadTableDataArrest(a_edit_id, "first_update");
         }
     });
     $('#e_arrest').modal('hide');
 })
 
-function reloadTableDataArrest(a_edit_id) {
+function reloadTableDataArrest(a_edit_id, from) {
     $.ajax({
         url: master + '/welcome/reload_table_data_arrest',
         method: 'post',
@@ -1242,57 +1242,74 @@ function reloadTableDataArrest(a_edit_id) {
         },
         dataType: "json",
         success: function (data) {
-            // report = JSON.parse(JSON.stringify(data));
-            // var rowIndex = findRowIndexByVIdArrest(report[0].a_id);
-            //alert(rowIndex);
-            console.log("report=======>>", report);
-            console.log("Data=======>>", data);
+            report = JSON.parse(JSON.stringify(data));
+            var rowIndex = findRowIndexByVIdArrest(report[0].a_id);
 
-            //location.reload();
-            $('#a_edit_table tbody').empty();
-            data.forEach((item) => {
-                $('#a_edit_table tbody').append(`
-               <tr class="rowdata" data-arrest_id="${item.a_id}">
-                    <td style="display:none;"><input type="hidden" id="arrest_id" name="arrest_id" value="${item.a_id}">${item.a_id}</td>
-                    <td>${item.name}</td>
-                    <td>${item.nick_name}</td>
-                    <td>${item.father_name}</td>
-                    <td>${item.address}</td>
-                    <td>${item.mobile_no}</td>
-                    <td>${item.age}</td>
-                    <td>${item.gender}</td>
-                    <td>${item.other_case_link}</td>
-                    <td>${item.modus_operandi}</td>
-                    <td>${formatedate(item.arrest_date)}</td>
-                    <td>${item.status}</td>
-                    <td>${item.identification_mark}</td>
-                    <td style="width:9%">
-                        <div class="tooltip">
-                            <button type="button" class="btn btn-primary arrest_e"><i class="fa fa-edit"></i></button>
-                            <span class="tooltiptext">Edit</span>
-                        </div>
-                        <div class="tooltip">
-                            <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                            <span class="tooltiptext">Delete</span>
-                        </div>
-                    </td>
-                </tr>
-            `);
-            });
-            // if (rowIndex !== -1) {
-            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(2)').text(report[0].name);
-            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(3)').text(report[0].nick_name);
-            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(4)').text(report[0].father_name);
-            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(5)').text(report[0].address);
-            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(6)').text(report[0].mobile_no);
-            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(7)').text(report[0].age);
-            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(8)').text(report[0].gender);
-            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(9)').text(report[0].other_case_link);
-            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(10)').text(report[0].modus_operandi);
-            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(11)').text(formatedate(report[0].arrest_date));
-            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(12)').text(report[0].status);
-            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(13)').text(report[0].identification_mark);
-            // }
+            // console.log("report=======>>", report);
+            // console.log("rowIndex=======>>", rowIndex);
+
+            if (rowIndex !== -1) {
+                var visibleTds = $('#a_edit_table tr:eq(' + rowIndex + ') td:visible');
+                // console.log("Visible Tds Count======: ", visibleTds.length);
+
+                // Map data to visible `td` elements dynamically
+                visibleTds.each(function (index) {
+                    switch (index) {
+                        case 0: // For the first visible `td`
+                            $(this).text(report[0].name);
+                            break;
+                        case 1: // For the second visible `td`
+                            $(this).text(report[0].nick_name);
+                            break;
+                        case 2:
+                            $(this).text(report[0].father_name);
+                            break;
+                        case 3:
+                            $(this).text(report[0].address);
+                            break;
+                        case 4:
+                            $(this).text(report[0].mobile_no);
+                            break;
+                        case 5:
+                            $(this).text(report[0].age);
+                            break;
+                        case 6:
+                            $(this).text(report[0].gender);
+                            break;
+                        case 7:
+                            $(this).text(report[0].other_case_link);
+                            break;
+                        case 8:
+                            $(this).text(report[0].modus_operandi);
+                            break;
+                        case 9:
+                            $(this).text(formatedate(report[0].arrest_date));
+                            break;
+                        case 10:
+                            $(this).text(report[0].status);
+                            break;
+                        case 11:
+                            $(this).text(report[0].identification_mark);
+                            break;
+                        case 12: // Render dynamic buttons in the last visible column
+                            $(this).html(`
+                                <div class="tooltip">
+                                    <button type="button" class="btn btn-primary arrest_e"><i class="fa fa-edit"></i></button>
+                                    <span class="tooltiptext">Edit</span>
+                                </div>
+                                <div class="tooltip">
+                                    <button type="button" class="btn btn-danger arrest_delete"><i class="fa fa-trash"></i></button>
+                                    <span class="tooltiptext">Delete</span>
+                                </div>
+                            `);
+                            break;
+                        default:
+                            console.warn("No data mapping for visible column at index: ", index);
+                    }
+                });
+            } else {
+                console.error("Row not found for a_id: ", report[0].a_id);
+            }
         }
     });
 }
@@ -1768,9 +1785,9 @@ $('#seizure_data').click(function (e) {
     var seizure_type = $('#seizure_type').val();
     var seizure_search_from_date = $('#seizure_search_from_date').val();
     var seizure_search_to_date = $('#seizure_search_to_date').val();
-   
-    
-    if (seizure_type == "" && seizure_search_from_date == "" && seizure_search_to_date == "" ) {
+
+
+    if (seizure_type == "" && seizure_search_from_date == "" && seizure_search_to_date == "") {
         alert("Pleae select atlast any one filed");
     }
     else if ((seizure_search_from_date != "" && seizure_search_to_date == "") || (seizure_search_from_date == "" && seizure_search_to_date != "")) {
