@@ -247,7 +247,7 @@ $(document).ready(function () {
                                 <span class="tooltiptext">Edit</span>
                             </div>
                             <div class="tooltip">
-                                <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" class="btn btn-danger arrest_delete"><i class="fa fa-trash"></i></button>
                                 <span class="tooltiptext">Delete</span>
                             </div>
 						</td>
