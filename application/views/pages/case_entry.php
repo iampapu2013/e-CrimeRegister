@@ -23,7 +23,10 @@
 		padding: 8px 16px;
 		border-radius: 10px;
 	}
-
+	.btn-secondary{
+		padding: 8px 16px;
+		border-radius: 10px;
+	}
 	.colortext {
 		color: red;
 	}
@@ -61,6 +64,12 @@
 	.vtable {
 		display: none;
 	}
+	.atable {
+		display: none;
+	}
+	.stable {
+		/* display: none; */
+	}
 </style>
 
 <?php
@@ -81,7 +90,7 @@ if (isset($this->session->userdata['logged_in'])) {
 
 	</div>
 	<div class="col-lg-4">
-		<h3 style="text-align: center;margin-top: 13px; color: blue;text-decoration: underline;"> Case Entry Form</h3>
+		<h3 style="text-align: center;margin-top: 13px; color: blue;text-decoration: underline;"> CASE ENTRY FORM</h3>
 	</div>
 
 </div>
@@ -94,7 +103,7 @@ if (isset($this->session->userdata['logged_in'])) {
 
 	<div class="form-row ">
 		<div class="form-group col-md-3">
-			<label for="complain">Type of Complain:</label>
+			<label for="complain">Type of Complain:<span style="color: red">&nbsp;*</span></label>
 			<select id="complain" name="complain" style="height: auto" class="form-control">
 				<option value="">Type of complain...</option>
 				<option value="PS">PS Complain</option>
@@ -103,7 +112,7 @@ if (isset($this->session->userdata['logged_in'])) {
 			<?php echo form_error('complain', '<div style="color:red; font-style: italic;">', '</div>'); ?>
 		</div>
 		<div class="form-group common_input_div col-md-3">
-			<label for="ps">Name of PS:</label>
+			<label for="ps">Name of PS:<span style="color: red">&nbsp;*</span></label>
 			<select name="ps" style="height: auto" class="form-control" id="ps">
 				<option value="">Select Police Station</option>
 				<?php
@@ -116,27 +125,27 @@ if (isset($this->session->userdata['logged_in'])) {
 		</div>
 		<div class="form-group col-md-3">
 
-			<label for="fir_no">FIR No.</label>
+			<label for="fir_no">FIR No.<span style="color: red">&nbsp;*</span></label>
 			<input type="text" name="fir_no" id="fir_no" class="form-control">
 			<?php echo form_error('fir_no', '<div style="color:red; font-style: italic;">', '</div>'); ?>
 		</div>
 		<div class="form-group col-md-3">
-			<label for="fir_date">FIR Date:</label>
-			<input type="text" class="form-control" id="fir_date" name="fir_date">
+			<label for="fir_date">FIR Date:<span style="color: red">&nbsp;*</span></label>
+			<input type="text" class="form-control" id="fir_date" name="fir_date" autocomplete="off">
 
 			<?php echo form_error('fir_date', '<div style="color:red; font-style: italic;">', '</div>'); ?>
 		</div>
 	</div>
 
 	<div class="form-group">
-		<label for="us">Section of Law:</label>
+		<label for="us">Section of Law:<span style="color: red">&nbsp;*</span></label>
 		<input type="text" class="form-control" id="us" name="us" placeholder="section of law">
 		<?php echo form_error('us', '<div style="color:red; font-style: italic;">', '</div>'); ?>
 	</div>
 
 	<div class="form-row ">
 		<div class="form-group col-md-6">
-			<label for="crime_head">Crime Head:</label>
+			<label for="crime_head">Crime Head:<span style="color: red">&nbsp;*</span></label>
 			<select id="crimehead" name="crime_head" style="height: auto" class="form-control crimehead">
 				<option value="" selected>Crime head...</option>
 				<?php
@@ -161,7 +170,7 @@ if (isset($this->session->userdata['logged_in'])) {
 		?>
 	</div>
 	<div class="form-group">
-		<label for="gist">Gist of Case</label>
+		<label for="gist">Gist of Case:<span style="color: red">&nbsp;*</span></label>
 		<textarea class="form-control" id="gist" name="gist" placeholder="Gist of case"
 			Style="height:100px;"></textarea>
 		<?php echo form_error('gist', '<div style="color:red; font-style: italic;">', '</div>'); ?>
@@ -169,11 +178,11 @@ if (isset($this->session->userdata['logged_in'])) {
 
 	<div class="form-row ">
 		<div class="form-group col-md-9">
-			<label for="po">Place of Occurrence:</label>
+			<label for="po">Place of Occurrence:<span style="color: red">&nbsp;*</span></label>
 			<input type="text" name="po" id="po" class="form-control">
 		</div>
 		<div class="form-group col-md-3">
-			<label for="do">Date of Occurrence:</label>
+			<label for="do">Date of Occurrence:<span style="color: red">&nbsp;*</span></label>
 			<input type="text" class="form-control" name="do" id="do">
 		</div>
 	</div>
@@ -184,7 +193,7 @@ if (isset($this->session->userdata['logged_in'])) {
 			<input type="text" name="c_info" id="c_info" class="form-control">
 		</div>
 		<div class="form-group col-md-2">
-			<label for="victim">victim:</label>
+			<label for="victim">Victim:</label>
 			<input type="text" id="victim" name="victim" class="form-control">
 		</div>
 		<div class="form-group col-md-1" style="text-align:right">
@@ -198,7 +207,7 @@ if (isset($this->session->userdata['logged_in'])) {
 	<div class="form-row vtable">
 
 		<table class="table table-bordered" id="v_table">
-			<thead>
+			<thead style="background-color:LightGray;">
 				<tr>
 					<th style="display:none;">Sl No</th>
 					<!-- <th>Sl No</th> -->
@@ -233,9 +242,9 @@ if (isset($this->session->userdata['logged_in'])) {
 			</div>
 		</div>
 	</div>
-	<div class="form-row ">
+	<div class="form-row atable">
 		<table class="table table-bordered" id="a_table">
-			<thead>
+			<thead style="background-color:LightGray;">
 				<tr>
 
 					<th style="display:none;">Sl No</th>
@@ -280,8 +289,8 @@ if (isset($this->session->userdata['logged_in'])) {
 			<label for="ud_date">UD Date:</label>
 			<input type="text" class="form-control" id="ud_date" name="ud_date">
 		</div>
+
 		<div class="form-group col-md-2">
-			<label for="arrest">&nbsp;</label>
 			<div class="form-group">
 				<label for="seizure">Seizure Details:</label>
 				<button type="button" class="btn btn-primary seizure_m"><i class="fa fa-plus"></i>&nbsp;Add Seizure
@@ -289,9 +298,9 @@ if (isset($this->session->userdata['logged_in'])) {
 			</div>
 		</div>
 	</div>
-	<div class="form-row">
+	<div class="form-row stable">
 		<table class="table table-bordered" id="s_table">
-			<thead>
+			<thead style="background-color:LightGray;">
 				<tr>
 					<th style="display:none;">Sl No</th>
 					<th>Arms</th>
@@ -321,7 +330,6 @@ if (isset($this->session->userdata['logged_in'])) {
 
 	<div class=" form-group " style="text-align:right">
 		<button type="Submit" id="v_rowcount" class="btn btn-success">Submit</button>
-		<button type="button" class="btn btn-danger">Cancel</button>
 	</div>
 </form>
 
@@ -332,8 +340,8 @@ if (isset($this->session->userdata['logged_in'])) {
 <div id="v_victim" class="modal fade v_victim">
 	<div class="modal-dialog modal-lg"> <!--for Big Model -->
 		<div class="modal-content">
-			<div class="modal-header bg-secondary">
-				<h5 class="modal-title font-weight-bold text-white">Victim Details. Entry Page</h5>
+			<div class="modal-header bg-success">
+				<h5 class="modal-title font-weight-bold text-white">VICTIM DETAILS</h5>
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 			<div class="modal-body">
@@ -405,8 +413,8 @@ if (isset($this->session->userdata['logged_in'])) {
 <div id="a_arrest" class="modal fade arrest">
 	<div class="modal-dialog modal-lg"> <!--for Big Model -->
 		<div class="modal-content">
-			<div class="modal-header bg-secondary">
-				<h5 class="modal-title font-weight-bold text-white">Arrest Persons Details.....</h5>
+			<div class="modal-header bg-success">
+				<h5 class="modal-title font-weight-bold text-white">ARREST PERSON DETAILS</h5>
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 			<div class="modal-body">
@@ -537,8 +545,8 @@ if (isset($this->session->userdata['logged_in'])) {
 <div id="s_seizure" class="modal fade ">
 	<div class="modal-dialog modal-lg"> <!--for Big Model -->
 		<div class="modal-content">
-			<div class="modal-header bg-secondary">
-				<h5 class="modal-title font-weight-bold text-white">Seizure Details. Entry page</h5>
+			<div class="modal-header bg-success">
+				<h5 class="modal-title font-weight-bold text-white">SEIZURE DETAILS</h5>
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 			<div class="modal-body">

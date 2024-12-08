@@ -91,6 +91,7 @@
     $("#approvedcase").DataTable();
     $("#allcscase").DataTable();
     $("#seizuredata").DataTable();
+    $("#allud_data").DataTable();
 });
 //For Date picker--->
 $('#acc_arrestdate').datepicker({uiLibrary: 'bootstrap4',format: 'dd/mm/yyyy',autoclose: true,});
@@ -100,7 +101,7 @@ $('#a_arrestdate').datepicker({uiLibrary: 'bootstrap4',format: 'dd/mm/yyyy',auto
 $('#arrest_date').datepicker({uiLibrary: 'bootstrap4',format: 'dd/mm/yyyy',autoclose: true,});
 $('#a_date').datepicker({uiLibrary: 'bootstrap4',format: 'dd/mm/yyyy',autoclose: true,});
 $('#arrest_entry_fir_date').datepicker({uiLibrary: 'bootstrap4',format: 'dd/mm/yyyy',autoclose: true,});
-$('#seizure_entry_fir_date').datepicker({uiLibrary: 'bootstrap4',format: 'dd/mm/yyyy',autoclose: true,});
+$('#seizure_entry_gde_date').datepicker({uiLibrary: 'bootstrap4',format: 'dd/mm/yyyy',autoclose: true,});
 $('#cs_date').datepicker({uiLibrary: 'bootstrap4',format: 'dd/mm/yyyy',autoclose: true,});
 $('#frt_date').datepicker({uiLibrary: 'bootstrap4',format: 'dd/mm/yyyy',autoclose: true,});
 $('#frmf_date').datepicker({uiLibrary: 'bootstrap4',format: 'dd/mm/yyyy',autoclose: true,});

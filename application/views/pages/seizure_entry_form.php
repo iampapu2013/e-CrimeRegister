@@ -51,7 +51,7 @@ else
 
 
 <form  id="arrest_form" style="margin:30px 45px" action="<?php echo site_url('welcome/add_new_seizure');?>" method="post">
-		<div class="bg-success" id="hideDiv"><?php echo $this->session->flashdata('seizure_entry_message');?></div>
+		<!-- <div class="bg-success" id="hideDiv"><?php echo $this->session->flashdata('seizure_entry_message');?></div> -->
 		
 		<div class="bg-danger" id="hideDiv"><?php echo $this->session->flashdata('seizure_entry_error');?></div>		
 		<div class="container">
@@ -68,17 +68,17 @@ else
 								<?php echo form_error('seizure_entry_ps','<div style="color:red; font-style: italic;">', '</div>'); ?>	
 						</div>
 						<div class="form-group col-md-4">
-								<label for="seizure_entry_fir_no">FIR No.<span style="color: red">&nbsp;*</span></label>
-								<input type="text" class="form-control" id="seizure_entry_fir_no" name="seizure_entry_fir_no">
-								<?php echo form_error('seizure_entry_fir_no','<div style="color:red; font-style: italic;">', '</div>'); ?>
+								<label for="seizure_entry_gde_no">GDE No.<span style="color: red">&nbsp;*</span></label>
+								<input type="text" class="form-control" id="seizure_entry_gde_no" name="seizure_entry_gde_no">
+								<?php echo form_error('seizure_entry_gde_no','<div style="color:red; font-style: italic;">', '</div>'); ?>
 								
 						</div>
 						<div class="form-group col-md-4">
-								<label for="seizure_entry_fir_date" >FIR Date:<span style="color: red">&nbsp;*</span></label>
+								<label for="seizure_entry_gde_date" >GDE Date:<span style="color: red">&nbsp;*</span></label>
 									<div class='input-group' >
-										<input type="text" class="form-control" id="seizure_entry_fir_date" name="seizure_entry_fir_date" autoco mplete="off" />
+										<input type="text" class="form-control" id="seizure_entry_gde_date" name="seizure_entry_gde_date" autoco mplete="off" />
 									</div>
-								<?php echo form_error('seizure_entry_fir_date','<div style="color:red; font-style: italic;">', '</div>'); ?>	
+								<?php echo form_error('seizure_entry_gde_date','<div style="color:red; font-style: italic;">', '</div>'); ?>	
 						</div>
 				</div>
 

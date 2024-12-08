@@ -38,16 +38,9 @@
             cursor: pointer;
       }
 
-
-      /* Ensure that the demo table scrolls */
-      /*  th, td { white-space: nowrap; }
-    div.dataTables_wrapper {
-        margin: 0 auto;
-    }*/
-
-      /* div.container {
-        width: 80%;
-    }*/
+      .row_seizuredata:hover {
+            background-color: #dcdcdc;
+      }
 </style>
 
 <?php
@@ -70,17 +63,16 @@ if (isset($this->session->userdata['logged_in'])) {
 </div>
 
 <div id="all" class="tabcontent">
-      <h3 style="text-align: center; color: blue;text-decoration: underline">Seizure Edit</h3>
-
-
-
+      <h3 style="text-align: center;margin-top: 13px; color: blue;text-decoration: underline;">SEIZURE EDIT</h3>
 
       <div class="table-responsive">
             <table id="seizuredata" class="table table-bordered" style="width: 100%">
                   <thead>
-                        <tr>
+                        <tr class="bg-secondary" style="color:white">
                               <th style="width:9%">Name Of PS</th>
+                              <th style="width:9%">Case id</th>
                               <th>Case No</th>
+                              <th>GDE No</th>
                               <th>Date</th>
                               <th>Under Section</th>
                               <th style="width:13%">Seizure Status (Yes/No)</th>
@@ -102,7 +94,10 @@ if (isset($this->session->userdata['logged_in'])) {
                               ?>
                               <tr class="row_seizuredata">
                                     <td><?php echo $row->name_of_ps; ?></td>
-                                    <td> <?php echo $row->fir_no; ?></td>
+                                    <td><?php echo $row->case_id; ?></td>
+                                   
+                                    <td> <?php echo $row->fir_no;?></td>
+                                    <td> <?php echo $row->gde_no; ?></td>
                                     <td><?php echo $date; ?></td>
                                     <td> <?php echo $row->us; ?></td>
                                     <td><?php echo $row->arms != 0 || $row->ammunition != 0 || $row->explosive != 0 || $row->id_seizure != 0 || $row->id_destroy != 0 || $row->bomb != 0 || $row->ganja != 0 || $row->herion != 0 || $row->fire_cracker != 0 || $row->board_money != 0 || $row->unclaim_property != "" || $row->suspicious_property != "" || $row->other != "" ? '<b style="color:red">Yes</b>' : '<b>No</b>' ?>
@@ -145,7 +140,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                                                         class="view_sdate"></span></h3>
                                                       </i>
                                                       <P style="font-size:20px">
-                                                      <b>Arms: </b></span><i class="view_sarms"></i>
+                                                      <b>Arms:... </b></span><i class="view_sarms"></i>
                                                       <br>
                                                       <b>Arms Type: </b></span><i class="view_sarms_type"></i>
                                                       <br>

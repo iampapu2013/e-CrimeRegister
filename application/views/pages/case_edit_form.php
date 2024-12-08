@@ -77,16 +77,16 @@ if (isset($this->session->userdata['logged_in'])) {
 
 	</div>
 	<div class="col-lg-4">
-		<h4 style="text-align: center;margin-top: 13px ;color: blue;text-decoration: underline"> Case Edit</h4>
+	<h3 style="text-align: center;margin-top: 13px; color: blue;text-decoration: underline;"> CASE EDIT FORM</h3>
 	</div>
 	<?php
 	if ($user_type_id == '6') {
 
 
 		?>
-		<div class="col-lg-4">
-			<button type="button" style="" class="btn btn-primary float-right  ">View All Case</button>
-		</div>
+		<div class="col-lg-4"><a href="<?php echo site_url('welcome/admin_caseentry'); ?>"Style="font-size:16px"><button type="button" class="btn btn-warning float-right" style="color:blue"><B>VIEW ALL CASE</B></button></a></div>
+			
+		
 		<?php
 	}
 	?>
@@ -461,7 +461,7 @@ if (isset($this->session->userdata['logged_in'])) {
 							</td>
 
 
-							<!-- <td><input id="v_contact_edit" name="v_contact_edit" class="v_input_box" value="<?php //echo $fatchvictim->contact;     ?>" readonly></td>  -->
+							<!-- <td><input id="v_contact_edit" name="v_contact_edit" class="v_input_box" value="</?php //echo $fatchvictim->contact;     ?>" readonly></td>  -->
 							<td style="width:9%">
 								<div class="tooltip">
 									<button type="button" class="btn btn-primary arrest_e"><i class="fa fa-edit"></i></button>

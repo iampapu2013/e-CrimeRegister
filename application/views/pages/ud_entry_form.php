@@ -64,9 +64,8 @@ else
                     
     </div>
     <div class="col-lg-4">
-        <h4 style="text-align: center;margin-top: 13px"> UD Entry Form...</h4>
+        <h3 style="text-align: center; color: blue;text-decoration: underline">UD Entry Form</h3>
     </div>
-
 </div>
 
 <form  id="ud_entry_form" style="margin:30px 45px" action="<?php echo site_url('welcome/add_ud');?>" method="post">
@@ -114,7 +113,8 @@ else
                 <option value="OBC">OBC</option>
             </select>
         </div>
-        <div class="form-group col-md-4"> 
+        
+        <div class="form-group col-md-2"> 
             <label for="ud_gender">Gender:<span style="color: red">&nbsp;*</span></label> 
             <select id="ud_gender" name="ud_gender" class="form-control" style="height: auto">
                 <option value="">Select Gender...</option>
@@ -122,6 +122,10 @@ else
                 <option value="Female">Female</option>
                 <option value="Transgender">Transgender</option>
             </select>
+        </div>
+        <div class="form-group col-md-2"> 
+            <label for="ud_age">Age:<span style="color: red">&nbsp;*</span></label> 
+            <input type="text" name="ud_age" id="ud_age" class="form-control">
         </div>
         <div class="form-group col-md-4"> 
             <label for="how_to_death">How to Death:<span style="color: red">&nbsp;*</span></label> 

@@ -163,7 +163,8 @@ class Mod_login extends CI_Model
 
 	public function edit_seizure($user_id)
 	{
-		$sql = "SELECT ps_name.name_of_ps,fir_entry.case_id,fir_entry.fir_no, fir_entry.us, fir_entry.fir_date, seizure.arms,seizure.arms_type,seizure.ammunition,seizure.ammunition_type,seizure.explosive,seizure.explosive_type,seizure.id_seizure,seizure.id_destroy,seizure.bomb,seizure.ganja,seizure.herion,seizure.fire_cracker,seizure.board_money,seizure.unclaim_property,seizure.suspicious_property,seizure.other from fir_entry INNER JOIN ps_name on fir_entry.ps=ps_name.ps_id INNER JOIN seizure on fir_entry.case_id=seizure.case_id INNER JOIN user_ps_maping on user_ps_maping.ps_id=fir_entry.ps where user_ps_maping.user_id='" . $user_id . "'";
+		$sql = "SELECT ps_name.name_of_ps, ps_name.ps_id,fir_entry.fir_no, fir_entry.fir_date, fir_entry.us, seizure.* from seizure
+		INNER JOIN fir_entry on fir_entry.case_id=seizure.case_id INNER JOIN ps_name on fir_entry.ps=ps_name.ps_id INNER JOIN user_ps_maping on user_ps_maping.ps_id=fir_entry.ps where user_ps_maping.user_id='" . $user_id . "'";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}

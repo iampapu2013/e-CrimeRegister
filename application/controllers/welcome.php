@@ -368,6 +368,12 @@ class welcome extends CI_Controller
 		$data = $this->Mod_login->edit_seizure_data($caseid);
 		echo json_encode($data);
 	}
+	public function view_all_ud_data()
+	{
+		$ud_id = $this->input->post('ud_id');
+		$data = $this->Mod_login->edit_ud_update($ud_id);
+		echo json_encode($data);
+	}
 
 
 	public function edit_case()
@@ -890,7 +896,9 @@ class welcome extends CI_Controller
 						$this->arrest_entry();
 					}
 				} else {
-					echo "<script>alert('Arrest Person not insert'); window.location.href='" . site_url('welcome/arrest_entry') . "'</script>";
+					// echo "<script>alert('This Case Number not insert in database');'</script>";
+					// $this->arrest_entry();
+					echo "<script>alert('This Case Number not insert in database'); window.location.href='" . site_url('welcome/arrest_entry') . "'</script>";
 				}
 			}
 		}
@@ -1240,6 +1248,7 @@ class welcome extends CI_Controller
 			$religion = $this->input->post('ud_religion');
 			$caste = $this->input->post('ud_caste');
 			$gender = $this->input->post('ud_gender');
+			$age = $this->input->post('ud_age');
 			$howtodeath = $this->input->post('how_to_death');
 			$reason = $this->input->post('reason_death');
 			$profession = $this->input->post('profession_death');
@@ -1256,6 +1265,7 @@ class welcome extends CI_Controller
 			$ud_arr['ud_religion'] = $religion;
 			$ud_arr['ud_caste'] = $caste;
 			$ud_arr['ud_gender'] = $gender;
+			$ud_arr['age'] = $age;
 			$ud_arr['how_to_death'] = $howtodeath;
 			$ud_arr['reason_death'] = $reason;
 			$ud_arr['profession_death'] = $profession;
@@ -1280,13 +1290,14 @@ class welcome extends CI_Controller
 	public function add_new_seizure()
 	{
 		$this->form_validation->set_rules('seizure_entry_ps', 'Police Station', 'trim|required');
-		$this->form_validation->set_rules('seizure_entry_fir_no', 'FIR No', 'trim|required');
-		$this->form_validation->set_rules('seizure_entry_fir_date', 'FIR Date', 'trim|required');
+		$this->form_validation->set_rules('seizure_entry_gde_no', 'FIR No', 'trim|required');
+		$this->form_validation->set_rules('seizure_entry_gde_date', 'FIR Date', 'trim|required');
 
 		if ($this->form_validation->run() == false) {
 			$this->seizure_entry();
 		} else {
 			$arms = $this->input->post('seizure_entry_arms');
+			$gde_no = $this->input->post('seizure_entry_gde_no');
 			$armstype = $this->input->post('seizure_entry_armstype');
 			$ammu = $this->input->post('seizure_entry_ammu');
 			$ammutype = $this->input->post('seizure_entry_ammutype');
@@ -1306,20 +1317,23 @@ class welcome extends CI_Controller
 			$orderps = explode(',', $ps);
 			$psid = $orderps[0];
 			$psshortame = $orderps[1];
-			$fir_no = $this->input->post('seizure_entry_fir_no');
-			$fir_date = $this->input->post('seizure_entry_fir_date');
-			$orderdate = explode('/', $fir_date);
+			$gde_no = $this->input->post('seizure_entry_gde_no');
+			$gde_date = $this->input->post('seizure_entry_gde_date');
+			$orderdate = explode('/', $gde_date);
 			$day = $orderdate[0];
 			$month = $orderdate[1];
 			$year = $orderdate[2];
 			$date = $year . '-' . $month . '-' . $day;
-			$caseid = $psshortame . $year . $fir_no;
+			$gdeid = 'GDE' . $psshortame . $year . $month . $gde_no;
 			if ($arms == "" && $armstype == "") {
 				echo "<script>alert('Please Entery any Seizure Item');</script>";
 				$this->seizure_entry();
 			} else {
 				$seizure_arr = array();
-				$seizure_arr['case_id'] = $caseid;
+				$seizure_arr['case_id'] = $gdeid;
+				$seizure_arr['seizure_ps'] = $psid;
+				$seizure_arr['gde_no'] = $gde_no;
+				$seizure_arr['gde_date'] = $date;
 				$seizure_arr['arms'] = $arms;
 				$seizure_arr['arms_type'] = $armstype;
 				$seizure_arr['ammunition'] = $ammu;
@@ -1339,16 +1353,22 @@ class welcome extends CI_Controller
 
 				$seizure_new_insert = $this->Mod_login->seizure_new_insert($seizure_arr);
 				$this->db->trans_begin();
-
-				if ($seizure_new_insert) {
+				if ($seizure_new_insert == 1) {
 					$this->db->trans_commit();
-					$this->session->set_flashdata('seizure_entry_message', 'Seizure insert successfully !!!');
-					redirect('welcome/seizure_entry');
+					echo "<script>alert('Successfully insert'); window.location.href='" . site_url('welcome/add_new_seizure') . "'</script>";
 				} else {
 					$this->db->trans_rollback();
-					$this->session->set_flashdata('seizure_entry_error', 'Seizure not insert !!!');
-					redirect('welcome/seizure_entry');
+					echo "<script>alert('Oops!!! Not insert'); window.location.href='" . site_url('welcome/add_new_seizure') . "'</script>";
 				}
+				// if ($seizure_new_insert) {
+				// 	$this->db->trans_commit();
+				// 	$this->session->set_flashdata('seizure_entry_message', 'Seizure insert successfully !!!');
+				// 	redirect('welcome/seizure_entry');
+				// } else {
+				// 	$this->db->trans_rollback();
+				// 	$this->session->set_flashdata('seizure_entry_error', 'Seizure not insert !!!');
+				// 	redirect('welcome/seizure_entry');
+				// }
 			}
 
 		}
@@ -1467,6 +1487,7 @@ class welcome extends CI_Controller
 			'ud_religion' => $this->input->post('ud_religion'),
 			'ud_caste' => $this->input->post('ud_caste'),
 			'ud_gender' => $this->input->post('ud_gender'),
+			'age' => $this->input->post('ud_age'),
 			'how_to_death' => $this->input->post('how_to_death'),
 			'reason_death' => $this->input->post('reason_death'),
 			'profession_death' => $this->input->post('profession_death'),

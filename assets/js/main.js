@@ -49,6 +49,7 @@ $(document).ready(function () {
 
     });
 
+   
 
     //Victim Edit Module----------->
     $("#v_edit_table tbody").on('click', '.victim_e', function (e) {
@@ -246,7 +247,7 @@ $(document).ready(function () {
                                 <span class="tooltiptext">Edit</span>
                             </div>
                             <div class="tooltip">
-                                <button type="button" class="btn btn-danger arrest_delete"><i class="fa fa-trash"></i></button>
+                                <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                 <span class="tooltiptext">Delete</span>
                             </div>
 						</td>
@@ -295,21 +296,21 @@ $(document).ready(function () {
 
     });
 
-
-
     // Date------05.12.2023-------new edit----------->
     $("#arrest").keyup(function (e) {
         e.stopImmediatePropagation();
         var arrestrowcount = $("#a_table tbody tr").length;
         var arr = $('#arrest').val();
         if ($("#arrest").val() == '' || arrestrowcount >= arr) {
+            $(".atable").hide();
             $(".arrest_m").prop("disabled", true);
         }
         else {
+            $(".atable").show();
             $(".arrest_m").prop("disabled", false);
         }
-
     });
+
 
     //For Seizure Module//
     $('.seizure_m').click(function (e) {
@@ -363,7 +364,7 @@ $(document).ready(function () {
                 });
                 $('.view_ps').html(report[0].name_of_ps);
                 $('.view_caseno').html(report[0].fir_no);
-                $('.view_date').html(report[0].fir_date);
+                $('.view_date').html(formatedate(report[0].fir_date));
                 $('.view_us').html(report[0].us);
                 $('.view_crimehead').html(report[0].crimehead);
                 $('.view_gist').html(report[0].gist);
@@ -397,7 +398,7 @@ $(document).ready(function () {
                 });
                 $('.view_ps').html(report[0].name_of_ps);
                 $('.view_caseno').html(report[0].fir_no);
-                $('.view_date').html(report[0].fir_date);
+                $('.view_date').html(formatedate(report[0].fir_date));
                 $('.view_us').html(report[0].us);
                 $('.view_crimehead').html(report[0].crimehead);
                 $('.view_gist').html(report[0].gist);
@@ -429,7 +430,7 @@ $(document).ready(function () {
                 });
                 $('.view_ps').html(report[0].name_of_ps);
                 $('.view_caseno').html(report[0].fir_no);
-                $('.view_date').html(report[0].fir_date);
+                $('.view_date').html(formatedate(report[0].fir_date));
                 $('.view_us').html(report[0].us);
                 $('.view_crimehead').html(report[0].crimehead);
                 $('.view_gist').html(report[0].gist);
@@ -548,6 +549,47 @@ $(document).ready(function () {
                 $('.view_sunclaim_property').html(report[0].unclaim_property);
                 $('.view_ssuspicious_property').html(report[0].suspicious_property);
                 $('.view_sother').html(report[0].other);
+            }
+        });
+
+    });
+
+
+///--------------------------------UD Modul---------------------------------Edit due------------------------------------>
+    // Seizure View Module-------------->
+    $('#allud_data tbody').on('click', '.view_uddetails', function (e) {
+        //$('.view_allcase').click(function(e){ 
+        e.stopImmediatePropagation();
+        var row = $(this).closest(".row_allud_data");
+        var ud_id = $(row).find('#ud_id').val();
+        //alert(udid);
+        $.ajax({
+            mimeType: 'text/html; charset=utf-8',
+            url: master + '/welcome/view_all_ud_data',
+            method: 'post',
+            data: {
+                ud_id: ud_id
+            },
+            dataType: "json",
+            success: function (data) {
+                report = JSON.parse(JSON.stringify(data));
+                $('#view_ud_data').modal({
+                    backdrop: 'static'
+                });
+                $('.ud_ps').html(report[0].name_of_ps);
+                $('.ud_caseno').html(report[0].ud_no);
+                $('.ud_date').html(formatedate(report[0].ud_date));
+                $('.ud_religion').html(report[0].ud_religion);
+                $('.ud_caste').html(report[0].ud_caste);
+                $('.ud_gender').html(report[0].ud_gender);
+                $('.ud_age').html(report[0].age);
+                $('.ud_howtodeath').html(report[0].how_to_death);
+                $('.ud_reasondeath').html(report[0].reason_death);
+                $('.ud_profession').html(report[0].profession_death);
+                $('.ud_socialstatus').html(report[0].social_death);
+                $('.ud_education').html(report[0].education_death);
+                $('.ud_po').html(report[0].ud_place);
+                $('.ud_caseref').html(report[0].ud_case_ref);
             }
         });
 
@@ -1200,27 +1242,57 @@ function reloadTableDataArrest(a_edit_id) {
         },
         dataType: "json",
         success: function (data) {
-            report = JSON.parse(JSON.stringify(data));
-            var rowIndex = findRowIndexByVIdArrest(report[0].a_id);
+            // report = JSON.parse(JSON.stringify(data));
+            // var rowIndex = findRowIndexByVIdArrest(report[0].a_id);
             //alert(rowIndex);
             console.log("report=======>>", report);
+            console.log("Data=======>>", data);
+
             //location.reload();
-            if (rowIndex !== -1) {
-                $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(2)').text(report[0].name);
-                $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(3)').text(report[0].nick_name);
-                $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(4)').text(report[0].father_name);
-                $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(5)').text(report[0].address);
-                $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(6)').text(report[0].mobile_no);
-                $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(7)').text(report[0].age);
-                $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(8)').text(report[0].gender);
-                $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(9)').text(report[0].other_case_link);
-                $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(10)').text(report[0].modus_operandi);
-                $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(11)').text(formatedate(report[0].arrest_date));
-                $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(12)').text(report[0].status);
-                $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(13)').text(report[0].identification_mark);
-                // $('#v_edit_table tr:eq(' + rowIndex + ') td:eq(6)').text(report[0].gender);
-                // $('#v_edit_table tr:eq(' + rowIndex + ') td:eq(7)').text(report[0].contact);
-            }
+            $('#a_edit_table tbody').empty();
+            data.forEach((item) => {
+                $('#a_edit_table tbody').append(`
+               <tr class="rowdata" data-arrest_id="${item.a_id}">
+                    <td style="display:none;"><input type="hidden" id="arrest_id" name="arrest_id" value="${item.a_id}">${item.a_id}</td>
+                    <td>${item.name}</td>
+                    <td>${item.nick_name}</td>
+                    <td>${item.father_name}</td>
+                    <td>${item.address}</td>
+                    <td>${item.mobile_no}</td>
+                    <td>${item.age}</td>
+                    <td>${item.gender}</td>
+                    <td>${item.other_case_link}</td>
+                    <td>${item.modus_operandi}</td>
+                    <td>${formatedate(item.arrest_date)}</td>
+                    <td>${item.status}</td>
+                    <td>${item.identification_mark}</td>
+                    <td style="width:9%">
+                        <div class="tooltip">
+                            <button type="button" class="btn btn-primary arrest_e"><i class="fa fa-edit"></i></button>
+                            <span class="tooltiptext">Edit</span>
+                        </div>
+                        <div class="tooltip">
+                            <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                            <span class="tooltiptext">Delete</span>
+                        </div>
+                    </td>
+                </tr>
+            `);
+            });
+            // if (rowIndex !== -1) {
+            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(2)').text(report[0].name);
+            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(3)').text(report[0].nick_name);
+            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(4)').text(report[0].father_name);
+            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(5)').text(report[0].address);
+            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(6)').text(report[0].mobile_no);
+            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(7)').text(report[0].age);
+            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(8)').text(report[0].gender);
+            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(9)').text(report[0].other_case_link);
+            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(10)').text(report[0].modus_operandi);
+            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(11)').text(formatedate(report[0].arrest_date));
+            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(12)').text(report[0].status);
+            //     $('#a_edit_table tr:eq(' + rowIndex + ') td:eq(13)').text(report[0].identification_mark);
+            // }
         }
     });
 }

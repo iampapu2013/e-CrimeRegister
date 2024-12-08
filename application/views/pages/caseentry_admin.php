@@ -47,15 +47,15 @@
       }
 
       .row_approveddata:hover {
-            background-color: #e6e9ed;
+            background-color: #dcdcdc;
       }
 
       .row_alldata:hover {
-            background-color: #e6e9ed;
+            background-color: #dcdcdc;
       }
 
       .row_newdata:hover {
-            background-color: #e6e9ed;
+            background-color: #dcdcdc;
       }
 
       /* Ensure that the demo table scrolls */
@@ -92,8 +92,7 @@ if ($user_type_id == '1' || $user_type_id == '2') {
       <div class="row mt-1">
             <div class="col-sm-8 pl-4"></div>
             <div class="col-sm-4 pr-5 mb-2 mt-1"><a href="<?php echo site_url('welcome/caseentry'); ?>"
-                        Style="font-size:16px"><button type="button" class="btn btn-primary float-right">Add New
-                              Case</button></a></div>
+                        Style="font-size:16px"><button type="button" class="btn btn-primary float-right"><B>ADD NEW CASE</B></button></a></div>
       </div>
 
       <?php
@@ -102,24 +101,24 @@ if ($user_type_id == '1' || $user_type_id == '2') {
 
 
 
-<div class="tab">
-      <button class="tablinks" onclick="openCity(event, 'all')" id="defaultOpen">All Case</button>
-      <button class="tablinks" onclick="openCity(event, 'new')">New Case</button>
+<div class="tab bg-success">
+      <button class="tablinks" onclick="openCity(event, 'all')" id="defaultOpen"><B>All Case</B></button>
+      <button class="tablinks" onclick="openCity(event, 'new')"><B>New Case</B></button>
       <?php
       if ($user_type_id == '1' || $user_type_id == '2') {
             ?>
-            <button class="tablinks" onclick="openCity(event, 'approved')">Approved Case</button>
+            <button class="tablinks" onclick="openCity(event, 'approved')"><B>Approved Case</B></button>
             <?php
       }
       ?>
 </div>
 
 <div id="all" class="tabcontent" id="mydata_table">
-      <h3 style="text-align: center;margin-top: 13px; color: blue;text-decoration: underline;"> All Case</h3>
+      <h3 style="text-align: center;margin-top: 13px; color: blue;text-decoration: underline;"> ALL CASE</h3>
       <div class="table-responsive">
             <table id="allcase" class="table table-bordered" style="width: 100%">
                   <thead>
-                        <tr>
+                        <tr class="bg-secondary" style="color:white">
                               <th style="width:10%">Name of PS</th>
                               <th style="display: none">case ID</th>
                               <th>FIR No</th>
@@ -186,11 +185,11 @@ if ($user_type_id == '1' || $user_type_id == '2') {
 
 
 <div id="new" class="tabcontent">
-      <h3 style="text-align: center;margin-top: 13px; color: blue;text-decoration: underline;"> New Case</h3>
+      <h3 style="text-align: center;margin-top: 13px; color: blue;text-decoration: underline;"> NEW CASE</h3>
       <div class="table-responsive">
             <table id="newcase" class="table table-bordered" style="width: 100%">
                   <thead>
-                        <tr>
+                        <tr class="bg-secondary" style="color:white">
                               <th style="width:10% ">Name of PS</th>
                               <th style="display: none">case ID</th>
                               <th>FIR NO</th>
@@ -243,11 +242,11 @@ if ($user_type_id == '1' || $user_type_id == '2') {
 if ($user_type_id == '1' || $user_type_id == '2') {
       ?>
       <div id="approved" class="tabcontent">
-            <h3 style="text-align: center;margin-top: 13px; color: blue;text-decoration: underline;"> Approved Case</h3>
+            <h3 style="text-align: center;margin-top: 13px; color: blue;text-decoration: underline;"> APPROVED CASE</h3>
             <div class="table-responsive">
                   <table id="approvedcase" class="table table-bordered" style="width: 100%">
                         <thead>
-                              <tr class="row_approveddata">
+                              <tr class="bg-secondary" style="color:white">
                                     <th style="width:10%">Name of PS</th>
                                     <th style="display: none">case ID</th>
                                     <th>FIR NO</th>
@@ -305,7 +304,7 @@ if ($user_type_id == '1' || $user_type_id == '2') {
       <div class="modal-dialog modal-lg"> <!--for Big Model -->
             <div class="modal-content">
                   <div class="modal-header bg-success">
-                        <h5 class="modal-title font-weight-bold text-white">Case Details:</h5>
+                        <h5 class="modal-title font-weight-bold text-white">CASE DETAILS:</h5>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                   </div>
                   <div class="modal-body" style="word-break: break-all">
@@ -348,7 +347,7 @@ if ($user_type_id == '1' || $user_type_id == '2') {
                         </div>
                   </div>
                   <div class="modal-footer">
-                        <button type="button" class="btn bg-success" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn bg-warning" data-dismiss="modal">Close</button>
                   </div>
             </div>
       </div>

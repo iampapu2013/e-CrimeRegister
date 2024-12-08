@@ -155,7 +155,7 @@ if (isset($this->session->userdata['logged_in'])) {
 	<div class="col-lg-4">
 	</div>
 	<div class="col-lg-4">
-		<h4 style="text-align: center;margin-top: 13px"> Road Traffic Accident Entry Form</h4>
+		<h4 style="text-align: center;margin-top: 13px;color:blue"> Road Traffic Accident Entry Form</h4>
 	</div>
 </div>
 <form id="rta_entry_form" style="margin:30px 45px" action="<?php echo site_url('welcome/add_rta'); ?>" method="post">
