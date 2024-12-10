@@ -128,7 +128,7 @@ class welcome extends CI_Controller
 	public function edit_seizure()
 	{
 		$user_id = $this->session->userdata['logged_in']['user_id'];
-		$data['edit_seizure'] = $this->Mod_login->edit_seizure($user_id);
+		$data['edit_seizure_list'] = $this->Mod_login->edit_seizure($user_id);
 		$this->load->view('pages/header');
 		$this->load->view('pages/nav');
 		$this->load->view('pages/edit_seizure', $data);
@@ -1317,21 +1317,23 @@ class welcome extends CI_Controller
 			$orderps = explode(',', $ps);
 			$psid = $orderps[0];
 			$psshortame = $orderps[1];
-			$gde_no = $this->input->post('seizure_entry_gde_no');
+			$psfullname = $orderps[2];
+			// $gde_no = $this->input->post('seizure_entry_gde_no');
 			$gde_date = $this->input->post('seizure_entry_gde_date');
 			$orderdate = explode('/', $gde_date);
 			$day = $orderdate[0];
 			$month = $orderdate[1];
 			$year = $orderdate[2];
 			$date = $year . '-' . $month . '-' . $day;
-			$gdeid = 'GDE' . $psshortame . $year . $month . $gde_no;
+			$case_id = 'GDE' . $psshortame . $year . $month . $gde_no;
 			if ($arms == "" && $armstype == "") {
 				echo "<script>alert('Please Entery any Seizure Item');</script>";
 				$this->seizure_entry();
 			} else {
 				$seizure_arr = array();
-				$seizure_arr['case_id'] = $gdeid;
+				$seizure_arr['case_id'] = $case_id;
 				$seizure_arr['seizure_ps'] = $psid;
+				$seizure_arr['seizure_psname'] = $psfullname;
 				$seizure_arr['gde_no'] = $gde_no;
 				$seizure_arr['gde_date'] = $date;
 				$seizure_arr['arms'] = $arms;
@@ -1360,15 +1362,6 @@ class welcome extends CI_Controller
 					$this->db->trans_rollback();
 					echo "<script>alert('Oops!!! Not insert'); window.location.href='" . site_url('welcome/add_new_seizure') . "'</script>";
 				}
-				// if ($seizure_new_insert) {
-				// 	$this->db->trans_commit();
-				// 	$this->session->set_flashdata('seizure_entry_message', 'Seizure insert successfully !!!');
-				// 	redirect('welcome/seizure_entry');
-				// } else {
-				// 	$this->db->trans_rollback();
-				// 	$this->session->set_flashdata('seizure_entry_error', 'Seizure not insert !!!');
-				// 	redirect('welcome/seizure_entry');
-				// }
 			}
 
 		}

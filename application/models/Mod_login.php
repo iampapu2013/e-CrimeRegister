@@ -163,16 +163,19 @@ class Mod_login extends CI_Model
 
 	public function edit_seizure($user_id)
 	{
-		$sql = "SELECT ps_name.name_of_ps, ps_name.ps_id,fir_entry.fir_no, fir_entry.fir_date, fir_entry.us, seizure.* from seizure
-		INNER JOIN fir_entry on fir_entry.case_id=seizure.case_id INNER JOIN ps_name on fir_entry.ps=ps_name.ps_id INNER JOIN user_ps_maping on user_ps_maping.ps_id=fir_entry.ps where user_ps_maping.user_id='" . $user_id . "'";
+		$sql = "SELECT ps_name.name_of_ps, ps_name.ps_id, fir_entry.fir_no, fir_entry.fir_date, fir_entry.us, seizure.* FROM seizure LEFT JOIN fir_entry ON fir_entry.case_id = seizure.case_id LEFT JOIN ps_name ON fir_entry.ps = ps_name.ps_id LEFT JOIN user_ps_maping ON user_ps_maping.ps_id = fir_entry.ps WHERE (user_ps_maping.user_id='" . $user_id . "' OR seizure.gde_no != 0)";
+
+
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function edit_seizure_data($case_id)
 	{
-		$sql = "SELECT ps_name.name_of_ps, ps_name.ps_id,fir_entry.fir_no, fir_entry.fir_date, seizure.* from seizure
-			INNER JOIN fir_entry on fir_entry.case_id=seizure.case_id INNER JOIN ps_name on fir_entry.ps=ps_name.ps_id where seizure.case_id='" . $case_id . "'";
+		// $sql = "SELECT ps_name.name_of_ps, ps_name.ps_id,fir_entry.fir_no, fir_entry.fir_date, seizure.* from seizure
+		// 	INNER JOIN fir_entry on fir_entry.case_id=seizure.case_id INNER JOIN ps_name on fir_entry.ps=ps_name.ps_id where seizure.case_id='" . $case_id . "'";
+
+		$sql = "SELECT ps_name.name_of_ps, ps_name.ps_id, fir_entry.fir_no, fir_entry.fir_date, fir_entry.us, seizure.* FROM seizure LEFT JOIN fir_entry ON fir_entry.case_id = seizure.case_id LEFT JOIN ps_name ON fir_entry.ps = ps_name.ps_id where seizure.case_id='" . $case_id . "'";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
@@ -609,11 +612,11 @@ class Mod_login extends CI_Model
 	}
 
 	/*public function victim_update($victim_update_arr,$victim_id)
-			 { 
-			 $this->db->where('v_id',$victim_id);
-			 $flag = $this->db->UPDATE('victim',$victim_update_arr);
-			 return $flag;
-			 }*/
+				{ 
+				$this->db->where('v_id',$victim_id);
+				$flag = $this->db->UPDATE('victim',$victim_update_arr);
+				return $flag;
+				}*/
 	public function victim_update($victim_update_arr, $victim_id)
 	{
 		$this->db->where('v_id', $victim_id);

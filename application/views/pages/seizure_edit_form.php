@@ -58,9 +58,10 @@ if (isset($this->session->userdata['logged_in'])) {
 	<?php foreach ($seizure_edit_data as $editseizurerow) {
 		//echo $row['arms'];die();
 		//For FIR Date ---->
-		$edit_arms = $editseizurerow['arms'];
-		$fir_date = $editseizurerow['fir_date'];
-		$orderdate = explode('-', $fir_date);
+		//$edit_arms = $editseizurerow['arms'];
+		//$fir_date = $editseizurerow['fir_date'];
+		$entry_date= $editseizurerow['fir_date']!=null?$editseizurerow['fir_date']:$editseizurerow['gde_date'];
+		$orderdate = explode('-', $entry_date);
 		$day = $orderdate[2];
 		$month = $orderdate[1];
 		$year = $orderdate[0];
@@ -72,8 +73,12 @@ if (isset($this->session->userdata['logged_in'])) {
 		
 		<div class="bg-danger" id="hideDiv"></?php //echo $this->session->flashdata('seizure_entry_error'); ?></div>		 -->
 		<div class="container">
-			<span style="color:red;text-align: center"><h4><?php echo $editseizurerow['name_of_ps']; ?> Case No. <?php echo $editseizurerow['fir_no']; ?>&nbsp; Dated: <?php echo $date; ?></h4></span><br>
-			<input type="hidden" name="case_id" id="case_id" value="<?php echo $case_id ?>">
+			<!-- <span style="color:red;text-align: center"><h4></?php echo $editseizurerow['name_of_ps']; ?> Case No. </?php echo $editseizurerow['fir_no']; ?>&nbsp; Dated: </?php echo $date; ?></h4></span><br> -->
+
+			<span style="color:red;text-align: center"><h4><?php echo $editseizurerow['name_of_ps']!=null?$editseizurerow['name_of_ps']:$editseizurerow['seizure_psname']; ?> Case No. <?php echo $editseizurerow['fir_no']!=null?'Case No'.$editseizurerow ['fir_no']:$editseizurerow['gde_no']; ?>&nbsp; Dated: <?php echo $date; ?></h4></span><br>
+
+
+			<input type="text" name="case_id" id="case_id" value="<?php echo $case_id ?>">
 			<!-- <div class="form-row ">
 				<div class="form-group common_input_div col-md-4">
 					<label for="seizure_edit_ps">Name of PS: <span style="color: red">&nbsp;*</span></label>
@@ -109,7 +114,6 @@ if (isset($this->session->userdata['logged_in'])) {
 					</?php echo form_error('seizure_entry_fir_date', '<div style="color:red; font-style: italic;">', '</div>'); ?>
 				</div>
 			</div> -->
-
 
 			<div class="row">
 				<div class="col-sm-6">

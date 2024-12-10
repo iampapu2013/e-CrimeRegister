@@ -62,7 +62,7 @@ else
 								<select name="seizure_entry_ps" style="height: auto"class="form-control" id="seizure_entry_ps" >
 										<option value="" >Select Police Station</option>
 										<?php 
-										foreach($get_policestation as $row){echo '<option value="'.$row->ps_id.','.$row->ps_short_nm.'">'.$row->name_of_ps.'</option>';}
+										foreach($get_policestation as $row){echo '<option value="'.$row->ps_id.','.$row->ps_short_nm.','.$row->name_of_ps.'">'.$row->name_of_ps.'</option>';}
 										?>
 								</select>
 								<?php echo form_error('seizure_entry_ps','<div style="color:red; font-style: italic;">', '</div>'); ?>	

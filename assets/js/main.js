@@ -516,13 +516,15 @@ $(document).ready(function () {
         e.stopImmediatePropagation();
         var row = $(this).closest(".row_seizuredata");
         var caseid = $(row).find('#case_id').val();
-        //alert(caseid);
+        var gdeno = $(row).find('#gde_no').val();
+        alert(gdeno);
         $.ajax({
             mimeType: 'text/html; charset=utf-8',
             url: master + '/welcome/view_all_seizure_data',
             method: 'post',
             data: {
-                caseid: caseid
+                caseid: caseid,
+                gdeno: gdeno
             },
             dataType: "json",
             success: function (data) {
@@ -530,6 +532,7 @@ $(document).ready(function () {
                 $('#view_seizure').modal({
                     backdrop: 'static'
                 });
+                if(gdeno!=0){
                 $('.view_sps').html(report[0].name_of_ps);
                 $('.view_scaseno').html(report[0].fir_no);
                 $('.view_sdate').html(formatedate(report[0].fir_date));
@@ -549,11 +552,11 @@ $(document).ready(function () {
                 $('.view_sunclaim_property').html(report[0].unclaim_property);
                 $('.view_ssuspicious_property').html(report[0].suspicious_property);
                 $('.view_sother').html(report[0].other);
+                }
             }
         });
 
     });
-
 
     ///--------------------------------UD Modul---------------------------------Edit due------------------------------------>
     // Seizure View Module-------------->
