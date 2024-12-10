@@ -532,26 +532,26 @@ $(document).ready(function () {
                 $('#view_seizure').modal({
                     backdrop: 'static'
                 });
-                if(gdeno!=0){
-                $('.view_sps').html(report[0].name_of_ps);
-                $('.view_scaseno').html(report[0].fir_no);
-                $('.view_sdate').html(formatedate(report[0].fir_date));
-                $('.view_sarms').html(report[0].arms);
-                $('.view_sarms_type').html(report[0].arms_type);
-                $('.view_sammunition').html(report[0].ammunition);
-                $('.view_sammunition_type').html(report[0].ammunition_type);
-                $('.view_sexplosive').html(report[0].explosive);
-                $('.view_sexplosive_type').html(report[0].explosive_type);
-                $('.view_sid_seizure').html(report[0].id_seizure);
-                $('.view_sid_destroy').html(report[0].id_destroy);
-                $('.view_sbomb').html(report[0].bomb);
-                $('.view_sganja').html(report[0].ganja);
-                $('.view_sherion').html(report[0].herion);
-                $('.view_sfire_cracker').html(report[0].fire_cracker);
-                $('.view_sboard_money').html(report[0].board_money);
-                $('.view_sunclaim_property').html(report[0].unclaim_property);
-                $('.view_ssuspicious_property').html(report[0].suspicious_property);
-                $('.view_sother').html(report[0].other);
+                if (gdeno != 0) {
+                    $('.view_sps').html(report[0].name_of_ps);
+                    $('.view_scaseno').html(report[0].fir_no);
+                    $('.view_sdate').html(formatedate(report[0].fir_date));
+                    $('.view_sarms').html(report[0].arms);
+                    $('.view_sarms_type').html(report[0].arms_type);
+                    $('.view_sammunition').html(report[0].ammunition);
+                    $('.view_sammunition_type').html(report[0].ammunition_type);
+                    $('.view_sexplosive').html(report[0].explosive);
+                    $('.view_sexplosive_type').html(report[0].explosive_type);
+                    $('.view_sid_seizure').html(report[0].id_seizure);
+                    $('.view_sid_destroy').html(report[0].id_destroy);
+                    $('.view_sbomb').html(report[0].bomb);
+                    $('.view_sganja').html(report[0].ganja);
+                    $('.view_sherion').html(report[0].herion);
+                    $('.view_sfire_cracker').html(report[0].fire_cracker);
+                    $('.view_sboard_money').html(report[0].board_money);
+                    $('.view_sunclaim_property').html(report[0].unclaim_property);
+                    $('.view_ssuspicious_property').html(report[0].suspicious_property);
+                    $('.view_sother').html(report[0].other);
                 }
             }
         });
@@ -1728,6 +1728,12 @@ function formatedate(dateStr) {
     return formattedDate;
 }
 
+function formatedateForSqlQuery(date) {
+    const [day, month, year] = date.split('/');
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
+}
+
 // For excel Convert---------->
 
 function get_current_date_time() {
@@ -1742,39 +1748,67 @@ function get_current_date_time() {
     return dateStr;
 }
 
+// Function to convert column names (keys) to the required format
+function convertColumnNames(data) {
+    return data.map(item => {
+        const newItem = {};
+        Object.keys(item).forEach(key => {
+            // Convert underscores to spaces and capitalize the first letter
+            const newKey = key.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase());
+            newItem[newKey] = item[key];
+        });
+        return newItem;
+    });
+}
+
 // For excel Convert---------->
-function downloadasexcel(type) {
-    var table = document.getElementById("disposal_type");
-    var rows = table.rows;
-    var data = [];
+function downloadasexcel(type, seizure_data) {
+    if (type != "seizure") {
+        var table = document.getElementById("disposal_type");
+        var rows = table.rows;
+        var data = [];
 
-    for (var i = 0; i < rows.length; i++) {
-        var row = [], cols = rows[i].children;
-        for (var j = 0; j < cols.length; j++) {
-            if (cols[j].hasAttribute('full-text')) {
-                row.push(cols[j].getAttribute('full-text').replace(/(\r\n|\n|\r)/gm, " ").trim());
-            } else if (cols[j].style.display === "none") {
-                row.push(cols[j].innerText.replace(/(\r\n|\n|\r)/gm, " ").trim());
-            } else {
-                // Insert line breaks for multiline content
-                var cellContent = cols[j].innerText.trim().replace(/(\r\n|\n|\r)/gm, "\n");
-                row.push(cellContent);
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].children;
+            for (var j = 0; j < cols.length; j++) {
+                if (cols[j].hasAttribute('full-text')) {
+                    row.push(cols[j].getAttribute('full-text').replace(/(\r\n|\n|\r)/gm, " ").trim());
+                } else if (cols[j].style.display === "none") {
+                    row.push(cols[j].innerText.replace(/(\r\n|\n|\r)/gm, " ").trim());
+                } else {
+                    // Insert line breaks for multiline content
+                    var cellContent = cols[j].innerText.trim().replace(/(\r\n|\n|\r)/gm, "\n");
+                    row.push(cellContent);
+                }
             }
+            data.push(row);
         }
-        data.push(row);
-    }
 
-    var worksheet = XLSX.utils.aoa_to_sheet(data);
-    var workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, type);
-    var excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-    var blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
-    var link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = `${type}_${get_current_date_time()}.xlsx`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+        var worksheet = XLSX.utils.aoa_to_sheet(data);
+        var workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, type);
+        var excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        var blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+        var link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = `${type}_${get_current_date_time()}.xlsx`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } else {
+        var formattedSeizureData = convertColumnNames(seizure_data);
+        var worksheet = XLSX.utils.json_to_sheet(formattedSeizureData);
+        var workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, type);
+        var excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        var blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+        var link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = `${type}_${get_current_date_time()}.xlsx`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
 }
 
 //For Data Table--->
@@ -1786,37 +1820,38 @@ $('#seizure_data').click(function (e) {
     //console.log(user_id); 
     var seizure_search_ps = $('#seizure_search_ps').val();
     var seizure_type = $('#seizure_type').val();
-    var seizure_search_from_date = $('#seizure_search_from_date').val();
-    var seizure_search_to_date = $('#seizure_search_to_date').val();
-
-
-    if (seizure_type == "" && seizure_search_from_date == "" && seizure_search_to_date == "") {
+    var seizure_search_from_date = formatedateForSqlQuery($('#seizure_search_from_date').val());
+    var seizure_search_to_date = formatedateForSqlQuery($('#seizure_search_to_date').val());
+    if (seizure_search_ps == "" && seizure_type == "" && seizure_search_from_date == "" && seizure_search_to_date == "") {
         alert("Pleae select atlast any one filed");
     }
     else if ((seizure_search_from_date != "" && seizure_search_to_date == "") || (seizure_search_from_date == "" && seizure_search_to_date != "")) {
         alert("If you select 'From Date' then select 'To Date' also OR if you select 'To Date' then select 'From Date' also");
     }
     else {
-        alert(seizure_type);
-        alert(seizure_search_from_date);
-        alert(seizure_search_to_date);
+        // alert(seizure_search_ps);
+        // alert(seizure_type);
+        // alert(seizure_search_from_date);
+        // alert(seizure_search_to_date);
         $.ajax({
-            url: master + '/welcome/crime_search_data',
+            url: master + '/welcome/search_seizure_data',
             method: 'post',
             data: {
                 user_id: user_id,
+                seizure_search_ps: seizure_search_ps,
                 seizure_type: seizure_type,
                 seizure_search_from_date: seizure_search_from_date,
                 seizure_search_to_date: seizure_search_to_date,
             },
             dataType: "json",
             success: function (response) {
-                // if (response.search_data.length > 0) {
-                //     var sl_no = 1;
-                //     response.search_data.forEach(function (value) {        
-                //     });
-                // } else {
-                // }
+                console.log("res======", response)
+                if (response.length > 0) {
+                    //download as xlsx file from arry of object dataset
+                    downloadasexcel("seizure", response)
+                }else{
+                    alert("No records found")
+                }
             }
         });
     }

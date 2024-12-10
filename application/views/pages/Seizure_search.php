@@ -102,6 +102,7 @@
         display: table;
         clear: both;
     }
+
     .btn_show {
         display: none;
     }
@@ -131,7 +132,10 @@ if (isset($this->session->userdata['logged_in'])) {
         <div class="column note" style="width: 30%; height: auto;">
             <h5 class="text-center" style="margin-top:3%; color:white">Seizure Search</h5>
             <hr>
-            <p><h5>You can search with: <br><br>A) Select Seizure Type <br>B) Select Seizure Type with From Date and TO Date also</h5></p>
+            <p>
+            <h5>You can search with: <br><br>A) Select Seizure Type <br>B) Select Seizure Type with From Date and TO
+                Date also</h5>
+            </p>
         </div>
         <div class="column" style="background-color:#eee; width: 70%;height: auto;">
             <div class="form-row " style="margin-top:3%">
@@ -151,11 +155,10 @@ if (isset($this->session->userdata['logged_in'])) {
                 </div>
 
                 <div class="form-group col-md-12">
-                <label for="seizure_type">
+                    <label for="seizure_type">
                         <h5>Select Seizure Type<span style="color: red">&nbsp;*</span></h5>
                     </label>
-                    <select id="seizure_type" name="seizure_type" style="height: auto"
-                        class="form-control crimehead">
+                    <select id="seizure_type" name="seizure_type" style="height: auto" class="form-control crimehead">
                         <option value="">Select Seizure Type</option>
                         <?php
                         foreach ($get_seizure_type as $row1) {
@@ -166,25 +169,25 @@ if (isset($this->session->userdata['logged_in'])) {
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label for="seizure_search_from_date"><b>From Date:<span style="color: red">&nbsp;*</span></b></label>
+                    <label for="seizure_search_from_date"><b>From Date:<span
+                                style="color: red">&nbsp;*</span></b></label>
                     <input type="text" class="form-control" id="seizure_search_from_date"
                         name="seizure_search_from_date" autocomplete="off" />
                 </div>
 
                 <div class="form-group col-md-6">
                     <label for="seizure_search_to_date"><b>To Date:<span style="color: red">&nbsp;*</span></b></label>
-                    <input type="text" class="form-control" id="seizure_search_to_date"
-                        name="seizure_search_to_date" autocomplete="off" />
+                    <input type="text" class="form-control" id="seizure_search_to_date" name="seizure_search_to_date"
+                        autocomplete="off" />
                 </div>
                 <div class="form-group col-md-12" style="text-align:right">
                     <!-- <label for="crimeSearchSubmit">&nbsp;</label> -->
                     <div class="form-group">
-                        <button type="submit" id="seizure_data" class="btn btn-success seizure_data">Save as Excel</button>
+                        <button type="submit" id="seizure_data" class="btn btn-success seizure_data">Save as
+                            Excel</button>
                     </div>
                 </div>
 
             </div>
         </div>
     </div>
-
-   

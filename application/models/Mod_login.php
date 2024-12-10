@@ -612,11 +612,11 @@ class Mod_login extends CI_Model
 	}
 
 	/*public function victim_update($victim_update_arr,$victim_id)
-				{ 
-				$this->db->where('v_id',$victim_id);
-				$flag = $this->db->UPDATE('victim',$victim_update_arr);
-				return $flag;
-				}*/
+									 { 
+									 $this->db->where('v_id',$victim_id);
+									 $flag = $this->db->UPDATE('victim',$victim_update_arr);
+									 return $flag;
+									 }*/
 	public function victim_update($victim_update_arr, $victim_id)
 	{
 		$this->db->where('v_id', $victim_id);
@@ -749,6 +749,44 @@ class Mod_login extends CI_Model
 		} else {
 			return false;
 		}
+	}
+	public function get_search_seizure_data($user_id, $seizure_search_ps, $seizure_type, $seizure_search_from_date, $seizure_search_to_date)
+	{
+		$conditions = "";
+		switch ($seizure_type) {
+			case "id_seizure/id_destroy":
+				$types = explode('/', $seizure_type);
+				$type_id_seizure = $types[0];
+				$type_id_destroy = $types[1];
+				$conditions .= "(seizure.$type_id_seizure != 0 OR seizure.$type_id_destroy != 0)";
+				break;
+			case "unclaim_property":
+			case "suspicious_property":
+			case "other":
+				$conditions .= "seizure.$seizure_type != ''";
+				break;
+			default:
+				$conditions .= "seizure.$seizure_type != 0";
+				break;
+		}
+
+		// Add date filters
+		$date_conditions = "((fir_entry.fir_date BETWEEN '$seizure_search_from_date' AND '$seizure_search_to_date') OR (fir_entry.fir_date IS NULL AND seizure.gde_date BETWEEN '$seizure_search_from_date' AND '$seizure_search_to_date'))";
+
+		// Add PS filter if provided
+		$ps_conditions = "";
+		if (!empty($seizure_search_ps)) {
+			$ps_conditions = "AND ((ps_name.ps_id = $seizure_search_ps) OR (ps_name.ps_id IS NULL AND seizure.seizure_ps = $seizure_search_ps))";
+		}
+
+		// Build final SQL query
+		$sql = "SELECT ps_name.name_of_ps, fir_entry.fir_date, seizure.case_id,seizure.seizure_psname,seizure.gde_no,seizure.gde_date,seizure.arms,seizure.arms_type,seizure.ammunition,seizure.ammunition_type,seizure.explosive,seizure.explosive_type,seizure.id_seizure,seizure.id_destroy,seizure.bomb,seizure.ganja,seizure.herion,seizure.fire_cracker,seizure.board_money,seizure.unclaim_property,seizure.suspicious_property,seizure.other FROM seizure 
+        LEFT JOIN fir_entry ON fir_entry.case_id = seizure.case_id 
+        LEFT JOIN ps_name ON fir_entry.ps = ps_name.ps_id 
+        WHERE $conditions AND $date_conditions $ps_conditions";
+		// echo $sql;die();
+		$query = $this->db->query($sql);
+		return $query->result_array();
 	}
 
 }

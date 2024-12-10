@@ -1796,6 +1796,16 @@ class welcome extends CI_Controller
 		}
 	}
 
+	public function search_seizure_data()
+	{
+		$user_id = $this->input->post('user_id');
+		$seizure_search_ps = $this->input->post('seizure_search_ps');
+		$seizure_type = $this->input->post('seizure_type');
+		$seizure_search_from_date = $this->input->post('seizure_search_from_date');
+		$seizure_search_to_date = $this->input->post('seizure_search_to_date');
+		$data = $this->Mod_login->get_search_seizure_data($user_id,$seizure_search_ps,$seizure_type,$seizure_search_from_date,$seizure_search_to_date);
+		echo json_encode($data);
+	}
 
 
 	
