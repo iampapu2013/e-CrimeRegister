@@ -20,6 +20,7 @@ class welcome extends CI_Controller
 	}
 	public function dashbordpage()
 	{
+		// print_r($this->session->userdata['logged_in']);die();
 		$user_id = $this->session->userdata['logged_in']['user_id'];
 		$data['countdetails'] = $this->Mod_login->countCase($user_id);
 		$this->load->view('pages/header');
@@ -128,7 +129,8 @@ class welcome extends CI_Controller
 	public function edit_seizure()
 	{
 		$user_id = $this->session->userdata['logged_in']['user_id'];
-		$data['edit_seizure_list'] = $this->Mod_login->edit_seizure($user_id);
+		$user_ps_id = $this->session->userdata['logged_in']['user_ps_id'];
+		$data['edit_seizure_list'] = $this->Mod_login->edit_seizure($user_id, $user_ps_id);
 		$this->load->view('pages/header');
 		$this->load->view('pages/nav');
 		$this->load->view('pages/edit_seizure', $data);
@@ -248,7 +250,7 @@ class welcome extends CI_Controller
 		$data['get_seizure_type'] = $this->Mod_login->get_seizure_type(); //Add Seizure Type in Dropdown -->
 		$this->load->view('pages/header');
 		$this->load->view('pages/nav');
-		$this->load->view('pages/seizure_search',$data);
+		$this->load->view('pages/seizure_search', $data);
 		$this->load->view('pages/footer');
 	}
 
@@ -430,12 +432,14 @@ class welcome extends CI_Controller
 			if ($result == TRUE) {
 				$user_id = $this->input->post('user_id');
 				$this->data['feeder'] = $this->Mod_login->read_user_information_ci($user_id);
+				$this->data['feeder'] = $this->Mod_login->get_user_ps_information($user_id);
 
 				if ($this->data['feeder'] != false) {
 					$session_data = array(
 						'user_type_id' => $this->data['feeder'][0]->user_type_id,
 						'user_name' => $this->data['feeder'][0]->user_name,
 						'user_id' => $this->data['feeder'][0]->user_id,
+						'user_ps_id' => $this->data['feeder'][0]->ps_id,
 					);
 					$this->session->set_userdata('logged_in', $session_data);
 					//redirect('dashboard',$session_data);
@@ -1521,22 +1525,22 @@ class welcome extends CI_Controller
 	}
 
 	/*public function victim_update_data()
-							   {
-								   $v_edit_id = $this->input->post('v_edit_id');
-								   //echo $vId;die();
-								   $data1 = array(
-								   'name'=>$this->input->post('v_edit_name'),
-								   );
-								   $return = $this->Mod_login->victim_update($data1,$v_edit_id);
-								   //echo json_encode($data);
-								   $caseid=$this->input->post('case_id');
-								   //echo $caseid;die();
-								   if($return==1){
-									   redirect('welcome/edit_case');
-								   //echo "<script>window.location.href='".site_url('welcome/edit_case/'.$caseid)."'</script>";
-								   }
-								   
-							   }*/
+								  {
+									  $v_edit_id = $this->input->post('v_edit_id');
+									  //echo $vId;die();
+									  $data1 = array(
+									  'name'=>$this->input->post('v_edit_name'),
+									  );
+									  $return = $this->Mod_login->victim_update($data1,$v_edit_id);
+									  //echo json_encode($data);
+									  $caseid=$this->input->post('case_id');
+									  //echo $caseid;die();
+									  if($return==1){
+										  redirect('welcome/edit_case');
+									  //echo "<script>window.location.href='".site_url('welcome/edit_case/'.$caseid)."'</script>";
+									  }
+									  
+								  }*/
 
 	public function victim_update_data()
 	{
@@ -1764,7 +1768,7 @@ class welcome extends CI_Controller
 			$rta_offending_vehicle = $this->input->post('rta_offending_vehicle');
 			$rta_victim_vehicle = $this->input->post('rta_victim_vehicle');
 			$rta_reason = $this->input->post('rta_reason');
-			
+
 
 			$rta_arr = array();
 			// $ud_arr['ud_id'] = $ud_id;
@@ -1785,7 +1789,7 @@ class welcome extends CI_Controller
 			$rta_arr['reason_of_accident'] = $rta_reason;
 			//echo $rta_arr; die();
 			$result = $this->Mod_login->insert_rta($rta_arr);
-		//echo $rta_arr; die();
+			//echo $rta_arr; die();
 			if ($result == 1) {
 				$this->db->trans_commit();
 				echo "<script>alert('RTA Successfully insert'); window.location.href='" . site_url('welcome/rta_page') . "'</script>";
@@ -1803,11 +1807,11 @@ class welcome extends CI_Controller
 		$seizure_type = $this->input->post('seizure_type');
 		$seizure_search_from_date = $this->input->post('seizure_search_from_date');
 		$seizure_search_to_date = $this->input->post('seizure_search_to_date');
-		$data = $this->Mod_login->get_search_seizure_data($user_id,$seizure_search_ps,$seizure_type,$seizure_search_from_date,$seizure_search_to_date);
+		$data = $this->Mod_login->get_search_seizure_data($user_id, $seizure_search_ps, $seizure_type, $seizure_search_from_date, $seizure_search_to_date);
 		echo json_encode($data);
 	}
 
 
-	
+
 }
 ?>
