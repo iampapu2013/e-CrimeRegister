@@ -75,7 +75,7 @@ if (isset($this->session->userdata['logged_in'])) {
 		<div class="container">
 			<!-- <span style="color:red;text-align: center"><h4></?php echo $editseizurerow['name_of_ps']; ?> Case No. </?php echo $editseizurerow['fir_no']; ?>&nbsp; Dated: </?php echo $date; ?></h4></span><br> -->
 
-			<span style="color:red;text-align: center"><h4><?php echo $editseizurerow['name_of_ps']!=null?$editseizurerow['name_of_ps']:$editseizurerow['seizure_psname']; ?> Case No. <?php echo $editseizurerow['fir_no']!=null?'Case No'.$editseizurerow ['fir_no']:$editseizurerow['gde_no']; ?>&nbsp; Dated: <?php echo $date; ?></h4></span><br>
+			<span style="color:red;text-align: center"><h4><?php echo $editseizurerow['name_of_ps']!=null?$editseizurerow['name_of_ps']:$editseizurerow['seizure_psname']; ?> <?php echo $editseizurerow['fir_no']!=null?'Case No. '.$editseizurerow ['fir_no']:'GDE No. '.$editseizurerow['gde_no']; ?>&nbsp; Dated: <?php echo $date; ?></h4></span><br>
 
 
 			<input type="text" name="case_id" id="case_id" value="<?php echo $case_id ?>">

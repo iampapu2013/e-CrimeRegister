@@ -76,8 +76,8 @@ if (isset($this->session->userdata['logged_in'])) {
                               <th>Date</th>
                               <th>Under Section</th>
                               <th style="width:13%">Seizure Status (Yes/No)</th>
-                              <th >case ID</th>
-                              <th >gde ID</th>
+                              <th style="display:none">case ID</th>
+                              <th style="display:none">gde ID</th>
 
                               <th style="width:9%">Action</th>
                         </tr>
@@ -85,12 +85,12 @@ if (isset($this->session->userdata['logged_in'])) {
                   <tbody>
                         <?php foreach ($edit_seizure_list as $row) {
                               //echo $row->fir_date;
-                              $entry_date= $row->fir_date!=null?$row->fir_date:$row->gde_date;
+                              $entry_date = $row->fir_date != null ? $row->fir_date : $row->gde_date;
                               $orderdate = explode('-', $entry_date);
-                                    $day = $orderdate[2];
-                                    $month = $orderdate[1];
-                                    $year = $orderdate[0];
-                                    $date = $day . '-' . $month . '-' . $year;
+                              $day = $orderdate[2];
+                              $month = $orderdate[1];
+                              $year = $orderdate[0];
+                              $date = $day . '-' . $month . '-' . $year;
 
                               // $fir_date = $row->fir_date;
                               // if ($fir_date != NULL) {
@@ -105,19 +105,20 @@ if (isset($this->session->userdata['logged_in'])) {
                               //echo $date;
                               ?>
                               <tr class="row_seizuredata">
-                                    <td><?php echo $row->name_of_ps!=NULL? $row->name_of_ps:$row->seizure_psname; ?></td>
+                                    <td><?php echo $row->name_of_ps != NULL ? $row->name_of_ps : $row->seizure_psname; ?></td>
                                     <td><?php echo $row->case_id; ?></td>
 
                                     <!-- <td> </?php echo $row->fir_no!=; ?></td> -->
-                                    <td> <?php echo $row->gde_no!=0?'<span style="color:blue">GDE No- '.$row->gde_no.'</span>':'<span style="color:red">Case No- '.$row->fir_no.'</span>';?></td>
+                                    <td> <?php echo $row->gde_no != 0 ? '<span style="color:blue">GDE No- ' . $row->gde_no . '</span>' : '<span style="color:red">Case No- ' . $row->fir_no . '</span>'; ?>
+                                    </td>
                                     <td><?php echo $date; ?></td>
                                     <td> <?php echo $row->us; ?></td>
                                     <td><?php echo $row->arms != 0 || $row->ammunition != 0 || $row->explosive != 0 || $row->id_seizure != 0 || $row->id_destroy != 0 || $row->bomb != 0 || $row->ganja != 0 || $row->herion != 0 || $row->fire_cracker != 0 || $row->board_money != 0 || $row->unclaim_property != "" || $row->suspicious_property != "" || $row->other != "" ? '<b style="color:red">Yes</b>' : '<b>No</b>' ?>
                                     </td>
 
-                                    <td><input type="text" id="case_id" name="case_id"
+                                    <td style="display:none"><input type="text" id="case_id" name="case_id"
                                                 value="<?php echo $row->case_id; ?>"></td>
-                                                <td><input type="text" id="gde_no" name="gde_no"
+                                    <td style="display:none"><input type="text" id="gde_no" name="gde_no"
                                                 value="<?php echo $row->gde_no; ?>"></td>
 
                                     <td> <a href="<?php echo site_url('welcome/seizure_edit_form/' . $row->case_id); ?>">
@@ -149,8 +150,8 @@ if (isset($this->session->userdata['logged_in'])) {
                                           <tbody>
                                                 <tr>
                                                       <i>
-                                                            <h3 style="color:blue"><span class="view_sps"></span> Case
-                                                                  No. <span class="view_scaseno"></span> Dated. <span
+                                                            <h3 style="color:blue"><span class="view_sps"></span> <span
+                                                                        class="view_scaseno"></span> Dated. <span
                                                                         class="view_sdate"></span></h3>
                                                       </i>
                                                       <P style="font-size:20px">
