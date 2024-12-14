@@ -129,8 +129,9 @@ class welcome extends CI_Controller
 	public function edit_seizure()
 	{
 		$user_id = $this->session->userdata['logged_in']['user_id'];
+		$user_type_id = $this->session->userdata['logged_in']['user_type_id'];
 		$user_ps_id = $this->session->userdata['logged_in']['user_ps_id'];
-		$data['edit_seizure_list'] = $this->Mod_login->edit_seizure($user_id, $user_ps_id);
+		$data['edit_seizure_list'] = $this->Mod_login->edit_seizure($user_id, $user_type_id, $user_ps_id);
 		$this->load->view('pages/header');
 		$this->load->view('pages/nav');
 		$this->load->view('pages/edit_seizure', $data);
@@ -432,15 +433,20 @@ class welcome extends CI_Controller
 			if ($result == TRUE) {
 				$user_id = $this->input->post('user_id');
 				$this->data['feeder'] = $this->Mod_login->read_user_information_ci($user_id);
-				$this->data['feeder'] = $this->Mod_login->get_user_ps_information($user_id);
+				$this->data['feeder_ps'] = $this->Mod_login->get_user_ps_information($user_id);
 
-				if ($this->data['feeder'] != false) {
+				if ($this->data['feeder_ps'] != false) {
+					$ps_ids = array();
+					foreach ($this->data['feeder_ps'] as $feeder_ps) {
+						$ps_ids[] = $feeder_ps->ps_id;
+					}
 					$session_data = array(
 						'user_type_id' => $this->data['feeder'][0]->user_type_id,
 						'user_name' => $this->data['feeder'][0]->user_name,
 						'user_id' => $this->data['feeder'][0]->user_id,
-						'user_ps_id' => $this->data['feeder'][0]->ps_id,
+						'user_ps_id' => $ps_ids,
 					);
+					// echo implode(", ", $ps_ids);
 					$this->session->set_userdata('logged_in', $session_data);
 					//redirect('dashboard',$session_data);
 					$this->dashbordpage($session_data);
@@ -1525,22 +1531,22 @@ class welcome extends CI_Controller
 	}
 
 	/*public function victim_update_data()
-								  {
-									  $v_edit_id = $this->input->post('v_edit_id');
-									  //echo $vId;die();
-									  $data1 = array(
-									  'name'=>$this->input->post('v_edit_name'),
-									  );
-									  $return = $this->Mod_login->victim_update($data1,$v_edit_id);
-									  //echo json_encode($data);
-									  $caseid=$this->input->post('case_id');
-									  //echo $caseid;die();
-									  if($return==1){
-										  redirect('welcome/edit_case');
-									  //echo "<script>window.location.href='".site_url('welcome/edit_case/'.$caseid)."'</script>";
-									  }
-									  
-								  }*/
+										{
+											$v_edit_id = $this->input->post('v_edit_id');
+											//echo $vId;die();
+											$data1 = array(
+											'name'=>$this->input->post('v_edit_name'),
+											);
+											$return = $this->Mod_login->victim_update($data1,$v_edit_id);
+											//echo json_encode($data);
+											$caseid=$this->input->post('case_id');
+											//echo $caseid;die();
+											if($return==1){
+												redirect('welcome/edit_case');
+											//echo "<script>window.location.href='".site_url('welcome/edit_case/'.$caseid)."'</script>";
+											}
+											
+										}*/
 
 	public function victim_update_data()
 	{

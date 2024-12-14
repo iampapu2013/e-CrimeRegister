@@ -42,6 +42,23 @@ class Mod_login extends CI_Model
 		}
 	}
 
+	/* public function get_user_ps_information($user_id)
+	   {
+		   $this->db->select('user_ps_maping.ps_id, user_login.*');
+		   $this->db->from('user_login');
+		   $this->db->join('user_type', 'user_type.user_type_id = user_login.user_type_id', 'inner');
+		   $this->db->join('user_ps_maping', 'user_ps_maping.user_id = user_login.user_id', 'inner');
+		   $this->db->where('user_login.user_id', $user_id);
+		   $this->db->limit(1);
+		   $query = $this->db->get();
+
+		   if ($query->num_rows() > 0) {
+			   return $query->result();
+		   } else {
+			   return false;
+		   }
+	   } */
+
 	public function get_user_ps_information($user_id)
 	{
 		$this->db->select('user_ps_maping.ps_id, user_login.*');
@@ -49,15 +66,15 @@ class Mod_login extends CI_Model
 		$this->db->join('user_type', 'user_type.user_type_id = user_login.user_type_id', 'inner');
 		$this->db->join('user_ps_maping', 'user_ps_maping.user_id = user_login.user_id', 'inner');
 		$this->db->where('user_login.user_id', $user_id);
-		$this->db->limit(1);
 		$query = $this->db->get();
-
+		
 		if ($query->num_rows() > 0) {
 			return $query->result();
 		} else {
 			return false;
 		}
 	}
+
 
 	//--------- Crime Head Entry -------->
 
@@ -179,15 +196,25 @@ class Mod_login extends CI_Model
 		return $query->result_array();
 	}
 
-	public function edit_seizure($user_id, $user_ps_id)
+	public function edit_seizure($user_id, $user_type_id, $user_ps_id)
 	{
-		if ($user_id == "ADMIN") {
-			$sql = "SELECT ps_name.name_of_ps, ps_name.ps_id, fir_entry.fir_no, fir_entry.fir_date, fir_entry.us, seizure.* FROM seizure LEFT JOIN fir_entry ON fir_entry.case_id = seizure.case_id LEFT JOIN ps_name ON fir_entry.ps = ps_name.ps_id LEFT JOIN user_ps_maping ON user_ps_maping.ps_id = fir_entry.ps WHERE (user_ps_maping.user_id='" . $user_id . "' OR seizure.gde_no != 0)";
-		} else {
-			$sql = "SELECT ps_name.name_of_ps, ps_name.ps_id, fir_entry.fir_no, fir_entry.fir_date, fir_entry.us, seizure.* FROM seizure LEFT JOIN fir_entry ON fir_entry.case_id = seizure.case_id LEFT JOIN ps_name ON fir_entry.ps = ps_name.ps_id LEFT JOIN user_ps_maping ON user_ps_maping.ps_id = fir_entry.ps WHERE (user_ps_maping.user_id='" . $user_id . "' OR seizure.seizure_ps =$user_ps_id)";
+		$seizure_ps_values = implode(', ', $user_ps_id);
+		$baseSql = "SELECT ps_name.name_of_ps, ps_name.ps_id, fir_entry.fir_no, fir_entry.fir_date, 
+                       fir_entry.us, seizure.* 
+					FROM seizure 
+					LEFT JOIN fir_entry ON fir_entry.case_id = seizure.case_id 
+					LEFT JOIN ps_name ON fir_entry.ps = ps_name.ps_id 
+					LEFT JOIN user_ps_maping ON user_ps_maping.ps_id = fir_entry.ps";
+		$condition = "";
+		if ($user_type_id == 1 || $user_type_id == 2) {
+			$condition = "(user_ps_maping.user_id = '$user_id' OR seizure.gde_no != 0)";
+		} elseif ($user_type_id == 5) {
+			$condition = "(user_ps_maping.user_id = '$user_id' OR (seizure.seizure_ps IN ($seizure_ps_values) AND seizure.gde_no != 0))";
+		} elseif ($user_type_id == 6) {
+			$condition = "(user_ps_maping.user_id = '$user_id' OR seizure.seizure_ps = ".$user_ps_id[0].")";
 		}
 
-
+		$sql = "$baseSql WHERE $condition";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
@@ -634,11 +661,11 @@ class Mod_login extends CI_Model
 	}
 
 	/*public function victim_update($victim_update_arr,$victim_id)
-												 { 
-												 $this->db->where('v_id',$victim_id);
-												 $flag = $this->db->UPDATE('victim',$victim_update_arr);
-												 return $flag;
-												 }*/
+																				  { 
+																				  $this->db->where('v_id',$victim_id);
+																				  $flag = $this->db->UPDATE('victim',$victim_update_arr);
+																				  return $flag;
+																				  }*/
 	public function victim_update($victim_update_arr, $victim_id)
 	{
 		$this->db->where('v_id', $victim_id);
