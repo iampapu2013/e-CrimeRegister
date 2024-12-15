@@ -7,6 +7,7 @@ class welcome extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+        $this->load->library('session'); // Load the session library
 		$this->load->model('Mod_login');
 		$this->load->helper('user_helper');
 		//$this->load->model('xyz');
