@@ -44,7 +44,7 @@ else
 <div class="row" style="margin:30px 45px">
 	<div class="col-lg-4"></div>
 	<div class="col-lg-4">
-		<h4 style="text-align: center;margin-top: 13px"> Seizure Entry </h4>
+		<h3 style="text-align: center;margin-top: 13px; color: blue;text-decoration: underline;">SEIZURE ENTRY</h3>
 	</div>
 </div>
 

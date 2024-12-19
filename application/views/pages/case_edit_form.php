@@ -79,17 +79,17 @@ if (isset($this->session->userdata['logged_in'])) {
 	<div class="col-lg-4">
 	<h3 style="text-align: center;margin-top: 13px; color: blue;text-decoration: underline;"> CASE EDIT FORM</h3>
 	</div>
-	<?php
-	if ($user_type_id == '6') {
+	<!-- </?php
+	//if ($user_type_id == '6') {
 
 
 		?>
 		<div class="col-lg-4"><a href="<?php echo site_url('welcome/admin_caseentry'); ?>"Style="font-size:16px"><button type="button" class="btn btn-warning float-right" style="color:blue"><B>VIEW ALL CASE</B></button></a></div>
 			
 		
-		<?php
-	}
-	?>
+		</?php
+	//}
+	?> -->
 </div>
 
 

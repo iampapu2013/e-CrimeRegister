@@ -63,7 +63,13 @@ if (isset($this->session->userdata['logged_in'])) {
 </div>
 
 <div id="all" class="tabcontent">
-      <h3 style="text-align: center;margin-top: 13px; color: blue;text-decoration: underline;">SEIZURE EDIT</h3>
+      <h3 style="text-align: center;margin-top: 13px; color: blue;text-decoration: underline;">SEIZURE LIST</h3>
+      <div class="row mt-1">
+        <div class="col-sm-8 pl-4"></div>
+        <div class="col-sm-4 pr-5 mb-2 mt-1"><a href="<?php echo site_url('welcome/seizure_entry'); ?>"
+                Style="font-size:16px"><button type="button" class="btn btn-primary float-right"><b>Add New
+                        Seizure</b></button></a></div>
+    </div>
 
       <div class="table-responsive">
             <table id="seizuredata" class="table table-bordered" style="width: 100%">

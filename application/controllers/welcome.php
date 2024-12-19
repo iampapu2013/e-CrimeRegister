@@ -7,7 +7,7 @@ class welcome extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-        $this->load->library('session'); // Load the session library
+		$this->load->library('session'); // Load the session library
 		$this->load->model('Mod_login');
 		$this->load->helper('user_helper');
 		//$this->load->model('xyz');
@@ -109,6 +109,7 @@ class welcome extends CI_Controller
 	{
 		$user_id = $this->session->userdata['logged_in']['user_id'];
 		$data['ps_disposal'] = $this->Mod_login->ps_disposal($user_id);
+		$data['view_court_disposal'] = $this->Mod_login->view_court_disposal($user_id);
 		$this->load->view('pages/header');
 		$this->load->view('pages/nav');
 		$this->load->view('pages/ps_disposal', $data);
@@ -1364,14 +1365,22 @@ class welcome extends CI_Controller
 				$seizure_arr['suspicious_property'] = $sp;
 				$seizure_arr['other'] = $os;
 
-				$seizure_new_insert = $this->Mod_login->seizure_new_insert($seizure_arr);
+				$checkcaseid = $this->Mod_login->check_gdeid($case_id);
 				$this->db->trans_begin();
-				if ($seizure_new_insert == 1) {
-					$this->db->trans_commit();
-					echo "<script>alert('Successfully insert'); window.location.href='" . site_url('welcome/add_new_seizure') . "'</script>";
-				} else {
-					$this->db->trans_rollback();
-					echo "<script>alert('Oops!!! Not insert'); window.location.href='" . site_url('welcome/add_new_seizure') . "'</script>";
+				if ($checkcaseid == 1) {//---ok-->
+					echo "<script>alert('Oops $psfullname GDE No. $gde_no is already insert!');</script>";
+					$this->seizure_entry();
+				}//---ok-->
+				else { //---ok-->
+					$seizure_new_insert = $this->Mod_login->seizure_new_insert($seizure_arr);
+					$this->db->trans_begin();
+					if ($seizure_new_insert == 1) {
+						$this->db->trans_commit();
+						echo "<script>alert('$psfullname Seizure Successfully insert'); window.location.href='" . site_url('welcome/add_new_seizure') . "'</script>";
+					} else {
+						$this->db->trans_rollback();
+						echo "<script>alert('Oops!!! Seizure Not insert'); window.location.href='" . site_url('welcome/add_new_seizure') . "'</script>";
+					}
 				}
 			}
 
@@ -1532,22 +1541,22 @@ class welcome extends CI_Controller
 	}
 
 	/*public function victim_update_data()
-										{
-											$v_edit_id = $this->input->post('v_edit_id');
-											//echo $vId;die();
-											$data1 = array(
-											'name'=>$this->input->post('v_edit_name'),
-											);
-											$return = $this->Mod_login->victim_update($data1,$v_edit_id);
-											//echo json_encode($data);
-											$caseid=$this->input->post('case_id');
-											//echo $caseid;die();
-											if($return==1){
-												redirect('welcome/edit_case');
-											//echo "<script>window.location.href='".site_url('welcome/edit_case/'.$caseid)."'</script>";
-											}
-											
-										}*/
+										   {
+											   $v_edit_id = $this->input->post('v_edit_id');
+											   //echo $vId;die();
+											   $data1 = array(
+											   'name'=>$this->input->post('v_edit_name'),
+											   );
+											   $return = $this->Mod_login->victim_update($data1,$v_edit_id);
+											   //echo json_encode($data);
+											   $caseid=$this->input->post('case_id');
+											   //echo $caseid;die();
+											   if($return==1){
+												   redirect('welcome/edit_case');
+											   //echo "<script>window.location.href='".site_url('welcome/edit_case/'.$caseid)."'</script>";
+											   }
+											   
+										   }*/
 
 	public function victim_update_data()
 	{

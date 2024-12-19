@@ -92,6 +92,8 @@
     $("#allcscase").DataTable();
     $("#seizuredata").DataTable();
     $("#allud_data").DataTable();
+    $("#allpending_case").DataTable();
+    
 });
 //For Date picker--->
 $('#acc_arrestdate').datepicker({uiLibrary: 'bootstrap4',format: 'dd/mm/yyyy',autoclose: true,});

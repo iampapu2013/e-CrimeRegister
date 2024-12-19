@@ -87,16 +87,17 @@ if (isset($this->session->userdata['logged_in'])) {
 ?>
 
 <?php
-if ($user_type_id == '1' || $user_type_id == '2') {
+if ($user_type_id == '1' || $user_type_id == '2' || $user_type_id == '6') {
       ?>
       <div class="row mt-1">
             <div class="col-sm-8 pl-4"></div>
             <div class="col-sm-4 pr-5 mb-2 mt-1"><a href="<?php echo site_url('welcome/caseentry'); ?>"
-                        Style="font-size:16px"><button type="button" class="btn btn-primary float-right"><B>ADD NEW CASE</B></button></a></div>
+                        Style="font-size:16px"><button type="button" class="btn btn-warning float-right"><B>ADD NEW FIR</B></button></a></div>
+                       
       </div>
 
       <?php
-}
+ } 
 ?>
 
 

@@ -46,7 +46,7 @@ if (isset($this->session->userdata['logged_in'])) {
 <div class="row" style="margin:30px 45px">
 	<div class="col-lg-4"></div>
 	<div class="col-lg-4">
-		<h4 style="text-align: center;margin-top: 13px;color:blue"> Seizure Edit Form </h4>
+		<h3 style="text-align: center;margin-top: 13px; color: blue;text-decoration: underline;">SEIZURE EDIT FORM</h3>
 	</div>
 </div>
 

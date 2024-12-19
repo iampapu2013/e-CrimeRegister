@@ -534,11 +534,11 @@ $(document).ready(function () {
                 });
                 if (gdeno != 0) {
                     $('.view_sps').html(report[0].seizure_psname); 
-                    $('.view_scaseno').html(report[0].gde_no);
+                    $('.view_scaseno').html('GDE No-'+report[0].gde_no);
                     $('.view_sdate').html(formatedate(report[0].gde_date));
                 }else{
                     $('.view_sps').html(report[0].name_of_ps);
-                    $('.view_scaseno').html(report[0].fir_no);
+                    $('.view_scaseno').html('Case No-'+report[0].fir_no);
                     $('.view_sdate').html(formatedate(report[0].fir_date));
                 }
                     $('.view_sarms').html(report[0].arms);

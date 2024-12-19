@@ -43,21 +43,21 @@ class Mod_login extends CI_Model
 	}
 
 	/* public function get_user_ps_information($user_id)
-		  {
-			  $this->db->select('user_ps_maping.ps_id, user_login.*');
-			  $this->db->from('user_login');
-			  $this->db->join('user_type', 'user_type.user_type_id = user_login.user_type_id', 'inner');
-			  $this->db->join('user_ps_maping', 'user_ps_maping.user_id = user_login.user_id', 'inner');
-			  $this->db->where('user_login.user_id', $user_id);
-			  $this->db->limit(1);
-			  $query = $this->db->get();
+					  {
+						  $this->db->select('user_ps_maping.ps_id, user_login.*');
+						  $this->db->from('user_login');
+						  $this->db->join('user_type', 'user_type.user_type_id = user_login.user_type_id', 'inner');
+						  $this->db->join('user_ps_maping', 'user_ps_maping.user_id = user_login.user_id', 'inner');
+						  $this->db->where('user_login.user_id', $user_id);
+						  $this->db->limit(1);
+						  $query = $this->db->get();
 
-			  if ($query->num_rows() > 0) {
-				  return $query->result();
-			  } else {
-				  return false;
-			  }
-		  } */
+						  if ($query->num_rows() > 0) {
+							  return $query->result();
+						  } else {
+							  return false;
+						  }
+					  } */
 
 	public function get_user_ps_information($user_id)
 	{
@@ -179,6 +179,12 @@ class Mod_login extends CI_Model
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
+	public function view_court_disposal($user_id)
+	{
+		$sql = "SELECT ps_name.name_of_ps,fir_entry.case_id,fir_entry.ps, crime_head.crimehead,fir_entry.fir_no, fir_entry.fir_date, fir_entry.us, fir_entry.crime_head, fir_entry.arrest, fir_entry.gist, fir_entry.flag, ps_disposal.type_of_disposal, ps_disposal.cs_no,ps_disposal.cs_date,ps_disposal.section_of_law, ps_disposal.person_cs , ps_disposal.frt_no, ps_disposal.frmf_no, ps_disposal.transfer_unit, ps_disposal.disposal_date from fir_entry INNER JOIN ps_name on fir_entry.ps=ps_name.ps_id INNER JOIN crime_head on fir_entry.crime_head=crime_head.crime_head_id INNER JOIN user_ps_maping on user_ps_maping.ps_id=fir_entry.ps INNER JOIN ps_disposal on fir_entry.case_id=ps_disposal.case_id where fir_entry.ps_disposal='Y' and user_ps_maping.user_id='" . $user_id . "'";
+		$query = $this->db->query($sql);
+		return $query->result();
+	}
 
 	// public function court_disposal_entry($case_id)
 	// {
@@ -213,7 +219,6 @@ class Mod_login extends CI_Model
 		} else {
 			$condition = "(user_ps_maping.user_id = '$user_id' OR (seizure.seizure_ps IN ($seizure_ps_values) AND seizure.gde_no != 0))";
 		}
-
 		$sql = "$baseSql WHERE $condition";
 		$query = $this->db->query($sql);
 		return $query->result();
@@ -465,6 +470,17 @@ class Mod_login extends CI_Model
 		}
 	}
 
+	public function check_gdeid($case_id)
+	{
+		$this->db->where('case_id', $case_id);
+		$query = $this->db->get('seizure');
+		if ($query->num_rows() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	// Caes insert---------->
 	public function case_insert($data = array())
 	{
@@ -661,11 +677,11 @@ class Mod_login extends CI_Model
 	}
 
 	/*public function victim_update($victim_update_arr,$victim_id)
-																					 { 
-																					 $this->db->where('v_id',$victim_id);
-																					 $flag = $this->db->UPDATE('victim',$victim_update_arr);
-																					 return $flag;
-																					 }*/
+	   { 
+	   $this->db->where('v_id',$victim_id);
+	   $flag = $this->db->UPDATE('victim',$victim_update_arr);
+	   return $flag;
+	   }*/
 	public function victim_update($victim_update_arr, $victim_id)
 	{
 		$this->db->where('v_id', $victim_id);
