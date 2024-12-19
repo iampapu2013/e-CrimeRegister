@@ -845,11 +845,17 @@ class Mod_login extends CI_Model
 		}
 
 		// Build final SQL query
-		$sql = "SELECT ps_name.name_of_ps, fir_entry.fir_date, seizure.case_id,seizure.seizure_psname,seizure.gde_no,seizure.gde_date,seizure.arms,seizure.arms_type,seizure.ammunition,seizure.ammunition_type,seizure.explosive,seizure.explosive_type,seizure.id_seizure,seizure.id_destroy,seizure.bomb,seizure.ganja,seizure.herion,seizure.fire_cracker,seizure.board_money,seizure.unclaim_property,seizure.suspicious_property,seizure.other FROM seizure 
+		$sql = "SELECT COALESCE(ps_name.name_of_ps, seizure.seizure_psname) AS name_of_ps,
+		COALESCE(fir_entry.fir_date, seizure.gde_date) AS date,
+		CASE 
+			WHEN seizure.gde_no IS NULL OR seizure.gde_no = 0 THEN CONCAT('Case No. - ', fir_entry.fir_no)
+			ELSE CONCAT('GDE No. - ', seizure.gde_no)
+		END AS case_GDE_no,
+		seizure.arms,seizure.arms_type,seizure.ammunition,seizure.ammunition_type,seizure.explosive,seizure.explosive_type,seizure.id_seizure,seizure.id_destroy,seizure.bomb,seizure.ganja,seizure.herion,seizure.fire_cracker,seizure.board_money,seizure.unclaim_property,seizure.suspicious_property,seizure.other FROM seizure 
         LEFT JOIN fir_entry ON fir_entry.case_id = seizure.case_id 
         LEFT JOIN ps_name ON fir_entry.ps = ps_name.ps_id 
         WHERE $conditions AND $date_conditions $ps_conditions";
-		// echo $sql;die();
+		//echo $sql;die();
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
